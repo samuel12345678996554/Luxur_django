@@ -1,0 +1,65 @@
+@baseUrl = http://localhost:8000
+
+### ==================== AUTENTICACIÓN ====================
+
+### 1. Login como Admin
+POST {{baseUrl}}/api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### 2. Login como Manager
+POST {{baseUrl}}/api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "manager",
+  "password": "manager123"
+}
+
+### 3. Login como Employee
+POST {{baseUrl}}/api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "employee",
+  "password": "employee123"
+}
+
+### 4. Login como Client
+POST {{baseUrl}}/api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "client",
+  "password": "client123"
+}
+
+### ==================== LOGOUT ====================
+
+### 5. Logout - Invalidar refresh token
+POST {{baseUrl}}/api/auth/logout/
+Content-Type: application/json
+
+{
+  "refresh": "AQUI_VA_TU_REFRESH_TOKEN"
+}
+
+### 6. Verificar token
+POST {{baseUrl}}/api/auth/verify/
+Content-Type: application/json
+
+{
+  "token": "AQUI_VA_TU_ACCESS_TOKEN"
+}
+
+### 7. Refresh token
+POST {{baseUrl}}/api/auth/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "AQUI_VA_TU_REFRESH_TOKEN"
+}

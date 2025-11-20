@@ -1,0 +1,54 @@
+@baseUrl = http://localhost:8000
+@token  = AQUI_VA_TU_ACCESS_TOKEN
+
+### ==================== CRUD CLIENTES ====================
+
+### READ - Listar todos los clientes (Admin)
+GET {{baseUrl}}/api/clients/
+Authorization: Bearer {{token}}
+
+### READ - Ver cliente específico (Admin)
+GET {{baseUrl}}/api/clients/1/
+Authorization: Bearer {{token}}
+
+### CREATE - Crear cliente
+POST {{baseUrl}}/api/clients/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "María García Pérez",
+  "address": "Carrera 15 #45-67, Bogotá",
+  "phone": "3201234567",
+  "email": "maria.garcia@example.com",
+  "password": "password123",
+  "status": "ACTIVE"
+}
+
+### UPDATE - Actualizar cliente completo (Admin)
+PUT {{baseUrl}}/api/clients/1/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "María García Pérez Actualizada",
+  "address": "Avenida 68 #123-45, Bogotá",
+  "phone": "3201111111",
+  "email": "maria.garcia.updated@example.com",
+  "password": "newpassword123",
+  "status": "ACTIVE"
+}
+
+### UPDATE - Actualización parcial (Admin)
+PATCH {{baseUrl}}/api/clients/1/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "phone": "3202222222",
+  "status": "INACTIVE"
+}
+
+### DELETE - Eliminar cliente (Admin)
+DELETE {{baseUrl}}/api/clients/2/
+Authorization: Bearer {{token}}

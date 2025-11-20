@@ -1,0 +1,122 @@
+@baseUrl = http://localhost:8000
+
+# ===========================
+# CLIENTS
+# ===========================
+
+### Obtener todos los clientes
+GET {{baseUrl}}/api/clients/
+
+### Obtener cliente por ID
+GET {{baseUrl}}/api/clients/1/
+
+### Crear un nuevo cliente
+POST {{baseUrl}}/api/clients/
+Content-Type: application/json
+
+{
+  "name": "María García",
+  "address": "Calle 123",
+  "phone": "3009876543",
+  "email": "maria.garcia@example.com",
+  "password": "87654321",
+  "status": "ACTIVE"
+}
+
+### Actualizar un cliente completamente (PUT)
+PUT {{baseUrl}}/api/clients/1/
+Content-Type: application/json
+
+{
+  "name": "María García Actualizada",
+  "address": "Calle 456 Nueva Dirección",
+  "phone": "3001234567",
+  "email": "maria.garcia.nueva@example.com",
+  "password": "nuevapassword123",
+  "status": "ACTIVE"
+}
+
+### Actualizar solo algunos campos (PATCH)
+PATCH {{baseUrl}}/api/clients/1/
+Content-Type: application/json
+
+{
+  "status": "INACTIVE"
+}
+
+### Eliminar un cliente
+DELETE {{baseUrl}}/api/clients/1/
+
+# ===========================
+# CONTRACTS
+# ===========================
+
+### Obtener todos los contratos
+GET {{baseUrl}}/api/contracts/
+
+### Obtener contrato por ID
+GET {{baseUrl}}/api/contracts/1/
+
+### Crear un nuevo contrato
+POST {{baseUrl}}/api/contracts/
+Content-Type: application/json
+
+{
+  "client_id": 1,
+  "property_id": 2,
+  "start_date": "2025-11-01",
+  "end_date": "2026-11-01",
+  "rent": 1200.00,
+  "status": "ACTIVE"
+}
+
+### Actualizar contrato completamente (PUT)
+PUT {{baseUrl}}/api/contracts/1/
+Content-Type: application/json
+
+{
+  "client_id": 1,
+  "property_id": 2,
+  "start_date": "2025-11-01",
+  "end_date": "2026-12-01",
+  "rent": 1250.00,
+  "status": "ACTIVE"
+}
+
+### Eliminar un contrato
+DELETE {{baseUrl}}/api/contracts/1/
+
+# ===========================
+# PROPERTIES
+# ===========================
+
+### Obtener todas las propiedades
+GET {{baseUrl}}/api/properties/
+
+### Obtener propiedad por ID
+GET {{baseUrl}}/api/properties/1/
+
+### Crear una nueva propiedad
+POST {{baseUrl}}/api/properties/
+Content-Type: application/json
+
+{
+  "name": "Apartamento Central",
+  "address": "Calle 45 #12-34",
+  "price": 150000.00,
+  "status": "AVAILABLE"
+}
+
+### Actualizar propiedad completamente (PUT)
+PUT {{baseUrl}}/api/properties/1/
+Content-Type: application/json
+
+{
+  "name": "Apartamento Central Renovado",
+  "address": "Calle 45 #12-34",
+  "price": 155000.00,
+  "status": "AVAILABLE"
+}
+
+### Eliminar una propiedad
+DELETE {{baseUrl}}/api/properties/1/
