@@ -8,6 +8,8 @@ from .models import Client
 from luxur.myapps.properties.models import Property
 from .serializers import ClientSerializer
 from luxur.myapps.utils.permissions import IsAdminUser, IsManagerOrAdmin, IsEmployeeOrAbove
+from rest_framework.routers import DefaultRouter
+from .views import ClientViewSet, VisitViewSet, ClientEvaluationViewSet
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -37,11 +39,11 @@ class ClientViewSet(viewsets.ModelViewSet):
         """Filtrar clientes según grupo del usuario"""
         user_groups = self.request.user.groups.values_list('name', flat=True)
         if not user_groups:
-            return Client.objects.none()  # Usuario sin grupos, no devuelve nada
+            return Client.objects.none()  
 
         queryset = Client.objects.all()
 
-        # Empleados solo ven clientes activos
+        
         if 'Empleados' in user_groups and 'Gerentes' not in user_groups and 'Administradores' not in user_groups:
             queryset = queryset.filter(status='ACTIVE')
 
@@ -50,7 +52,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         user_groups = request.user.groups.values_list('name', flat=True)
 
-        # Restricción gerentes
+        
         if 'Gerentes' in user_groups and 'Administradores' not in user_groups:
             if request.data.get('status') == 'INACTIVE':
                 return Response(
@@ -139,3 +141,10 @@ class ClientViewSet(viewsets.ModelViewSet):
             'users_by_group': {group.name: group.user_set.count() for group in Group.objects.all()},
             'generated_by': request.user.username
         })
+        
+router = DefaultRouter()
+router.register('clients', ClientViewSet, basename='clients')
+router.register('visits', VisitViewSet, basename='visits')
+router.register('evaluations', ClientEvaluationViewSet, basename='evaluations')
+
+urlpatterns = router.urls

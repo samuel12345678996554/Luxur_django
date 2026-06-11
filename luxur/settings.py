@@ -23,15 +23,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Apps del proyecto
     'luxur.myapps.clients.apps.ClientsConfig',
     'luxur.myapps.contracts.apps.ContractsConfig',
     'luxur.myapps.properties.apps.PropertiesConfig',
+    'luxur.myapps.owners.apps.OwnersConfig',
 
-    # Librerías externas
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'django_extensions',
 ]
 
 # --------------------------
@@ -111,12 +111,12 @@ WSGI_APPLICATION = 'luxur.wsgi.application'
 # --------------------------
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'XE',           # SID de Oracle
-        'USER': 'system',
-        'PASSWORD': 'Samuel2024!',
-        'HOST': '172.17.0.2',   # IP del contenedor Docker
-        'PORT': '1521',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'luxur_dbeaver',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

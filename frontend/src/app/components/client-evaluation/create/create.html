@@ -1,0 +1,70 @@
+<div class="card p-6 bg-white rounded-xl shadow">
+
+  <h2 class="text-2xl font-bold mb-4">
+    Nueva Evaluación
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+    <div>
+      <label class="block mb-2 font-semibold">Cliente</label>
+
+      <p-select
+        [(ngModel)]="evaluation.client"
+        [options]="clients"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Seleccione cliente"
+        styleClass="w-full">
+      </p-select>
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Calificación</label>
+
+      <p-inputnumber
+        [(ngModel)]="evaluation.rating"
+        [min]="1"
+        [max]="5"
+        styleClass="w-full"
+        inputStyleClass="w-full">
+      </p-inputnumber>
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="block mb-2 font-semibold">Comentarios</label>
+
+      <textarea
+        pTextarea
+        [(ngModel)]="evaluation.comments"
+        rows="4"
+        class="w-full"
+        placeholder="Ingrese comentarios de la evaluación">
+      </textarea>
+    </div>
+
+  </div>
+
+  <div class="flex gap-2 mt-6">
+
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      (onClick)="save()"
+      [loading]="loading">
+    </p-button>
+
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      routerLink="/client-evaluation">
+    </button>
+
+  </div>
+
+</div>
+
+<p-toast></p-toast>

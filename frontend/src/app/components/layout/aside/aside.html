@@ -1,0 +1,308 @@
+<div class="w-full">
+  <nav class="flex flex-col">
+    
+    <!-- CLIENTES -->
+    <div class="border-b border-gray-700">
+      <button 
+        (click)="toggleClients()"
+        class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+      >
+        <div class="flex items-center gap-2">
+          <i class="pi pi-users"></i>
+          <span>Clientes</span>
+        </div>
+        <i class="pi" [ngClass]="clientsOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+      <div *ngIf="clientsOpen" class="bg-gray-900">
+        <a 
+          routerLink="/client" 
+          routerLinkActive="bg-blue-600 text-white" 
+          [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-list text-sm"></i>
+          <span>Ver todos</span>
+        </a>
+        <a 
+          routerLink="/client/create" 
+          routerLinkActive="bg-blue-600 text-white" 
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-plus text-sm"></i>
+          <span>Crear</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- PROPIEDADES -->
+    <div class="border-b border-gray-700">
+      <button 
+        (click)="toggleProperties()"
+        class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+      >
+        <div class="flex items-center gap-2">
+          <i class="pi pi-building"></i>
+          <span>Propiedades</span>
+        </div>
+        <i class="pi" [ngClass]="propertiesOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+      <div *ngIf="propertiesOpen" class="bg-gray-900">
+        <a 
+          routerLink="/property" 
+          routerLinkActive="bg-blue-600 text-white" 
+          [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-list text-sm"></i>
+          <span>Ver todas</span>
+        </a>
+        <a 
+          routerLink="/property/create" 
+          routerLinkActive="bg-blue-600 text-white" 
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-plus text-sm"></i>
+          <span>Crear</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- CONTRATOS -->
+    <div class="border-b border-gray-700">
+      <button 
+        (click)="toggleContracts()"
+        class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+      >
+        <div class="flex items-center gap-2">
+          <i class="pi pi-file"></i>
+          <span>Contratos</span>
+        </div>
+        <i class="pi" [ngClass]="contractsOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+      <div *ngIf="contractsOpen" class="bg-gray-900">
+        <a 
+          routerLink="/contract" 
+          routerLinkActive="bg-blue-600 text-white" 
+          [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-list text-sm"></i>
+          <span>Ver todos</span>
+        </a>
+        <a 
+          routerLink="/contract/create" 
+          routerLinkActive="bg-blue-600 text-white" 
+          class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+        >
+          <i class="pi pi-plus text-sm"></i>
+          <span>Crear</span>
+        </a>
+      </div>
+    </div>
+<!-- PROPIETARIOS -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="toggleOwners()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-id-card"></i>
+      <span>Propietarios</span>
+    </div>
+    <i class="pi" [ngClass]="ownersOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="ownersOpen" class="bg-gray-900">
+    <a 
+      routerLink="/owner" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todos</span>
+    </a>
+
+    <a 
+      routerLink="/owner/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+<!-- TIPOS DE PROPIEDAD -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="togglePropertyTypes()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-tags"></i>
+      <span>Tipos de Propiedad</span>
+    </div>
+    <i class="pi" [ngClass]="propertyTypesOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="propertyTypesOpen" class="bg-gray-900">
+    <a 
+      routerLink="/property-type" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todos</span>
+    </a>
+
+    <a 
+      routerLink="/property-type/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+
+<!-- AMENIDADES -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="toggleAmenities()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-star"></i>
+      <span>Amenidades</span>
+    </div>
+    <i class="pi" [ngClass]="amenitiesOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="amenitiesOpen" class="bg-gray-900">
+    <a 
+      routerLink="/amenity" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todas</span>
+    </a>
+
+    <a 
+      routerLink="/amenity/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+
+<!-- PAGOS -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="togglePayments()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-dollar"></i>
+      <span>Pagos</span>
+    </div>
+    <i class="pi" [ngClass]="paymentsOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="paymentsOpen" class="bg-gray-900">
+    <a 
+      routerLink="/payment" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todos</span>
+    </a>
+
+    <a 
+      routerLink="/payment/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+    >
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+
+<!-- VISITAS -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="toggleVisits()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-calendar"></i>
+      <span>Visitas</span>
+    </div>
+    <i class="pi" [ngClass]="visitsOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="visitsOpen" class="bg-gray-900">
+    <a 
+      routerLink="/visit" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors">
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todas</span>
+    </a>
+
+    <a 
+      routerLink="/visit/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors">
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+
+<!-- EVALUACIONES -->
+<div class="border-b border-gray-700">
+  <button 
+    (click)="toggleEvaluations()"
+    class="w-full px-4 py-3 bg-gray-800 text-white font-semibold flex items-center justify-between hover:bg-gray-700 transition-colors"
+  >
+    <div class="flex items-center gap-2">
+      <i class="pi pi-star-fill"></i>
+      <span>Evaluaciones</span>
+    </div>
+    <i class="pi" [ngClass]="evaluationsOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+  </button>
+
+  <div *ngIf="evaluationsOpen" class="bg-gray-900">
+    <a 
+      routerLink="/client-evaluation" 
+      routerLinkActive="bg-blue-600 text-white" 
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors">
+      <i class="pi pi-list text-sm"></i>
+      <span>Ver todas</span>
+    </a>
+
+    <a 
+      routerLink="/client-evaluation/create" 
+      routerLinkActive="bg-blue-600 text-white" 
+      class="flex items-center gap-2 px-6 py-2 text-gray-300 hover:bg-gray-700 transition-colors">
+      <i class="pi pi-plus text-sm"></i>
+      <span>Crear</span>
+    </a>
+  </div>
+</div>
+
+  </nav>
+</div>

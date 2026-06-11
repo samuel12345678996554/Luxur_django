@@ -16,24 +16,53 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-    TokenBlacklistView,
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from luxur.myapps.clients.views import (
+    ClientViewSet,
+    VisitViewSet,
+    ClientEvaluationViewSet,
+    reset_password
 )
+
+from luxur.myapps.properties.views import (
+    PropertyViewSet,
+    PropertyTypeViewSet,
+    AmenityViewSet,
+    PropertyAmenityViewSet
+)
+
+from luxur.myapps.contracts.views import (
+    ContractViewSet,
+    PaymentViewSet,
+    ContractDocumentViewSet
+)
+
+from luxur.myapps.owners.views import OwnerViewSet
+
+
+router = DefaultRouter()
+
+router.register(r'clients', ClientViewSet, basename='client')
+router.register(r'owners', OwnerViewSet, basename='owner')
+router.register(r'properties', PropertyViewSet, basename='property')
+router.register(r'property-types', PropertyTypeViewSet, basename='property-type')
+router.register(r'amenities', AmenityViewSet, basename='amenity')
+router.register(r'property-amenities', PropertyAmenityViewSet, basename='property-amenity')
+router.register(r'contracts', ContractViewSet, basename='contract')
+router.register(r'payments', PaymentViewSet, basename='payment')
+router.register(r'contract-documents', ContractDocumentViewSet, basename='contract-document')
+router.register(r'visits', VisitViewSet, basename='visit')
+router.register(r'client-evaluations', ClientEvaluationViewSet, basename='client-evaluation')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # RUTAS DE AUTENTICACIÓN JWT
     path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
+    path('api/auth/reset-password/', reset_password, name='reset_password'),
 
-    # Rutas de apps con ViewSet
-    path('api/clients/', include('luxur.myapps.clients.urls_viewset')),
-    path('api/contracts/', include('luxur.myapps.contracts.urls_viewset')),
-    path('api/properties/', include('luxur.myapps.properties.urls_viewset')),
+    path('api/', include(router.urls)),
 ]

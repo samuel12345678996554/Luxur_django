@@ -1,0 +1,25 @@
+.client-card {
+  border-radius: 16px;
+}
+
+:host ::ng-deep .p-card {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+:host ::ng-deep .p-datatable {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-datatable thead th {
+  background-color: #f8fafc;
+  font-weight: 700;
+}
+
+:host ::ng-deep .p-datatable tbody tr:hover {
+  background-color: #eef4ff;
+}
+
+:host ::ng-deep .p-button {
+  border-radius: 8px;
+}

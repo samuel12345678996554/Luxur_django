@@ -1,0 +1,106 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Editar Contrato</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex flex-col">
+          <label class="block mb-2 font-semibold text-gray-700">Cliente *</label>
+          <p-select
+            formControlName="client"
+            [options]="clientOptions"
+            placeholder="Seleccionar cliente"
+            [filter]="true"
+            filterPlaceholder="Buscar cliente"
+            styleClass="w-full"
+          />
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('client')">
+            {{ getFieldError('client') }}
+          </small>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="block mb-2 font-semibold text-gray-700">Estado *</label>
+          <p-select
+            formControlName="status"
+            [options]="statusOptions"
+            placeholder="Seleccionar estado"
+            styleClass="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label class="block mb-2 font-semibold text-gray-700">Fecha Inicio *</label>
+          <p-datepicker
+            formControlName="start_date"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            placeholder="Seleccionar fecha"
+            styleClass="w-full"
+          />
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('start_date')">
+            {{ getFieldError('start_date') }}
+          </small>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="block mb-2 font-semibold text-gray-700">Fecha Fin *</label>
+          <p-datepicker
+            formControlName="end_date"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            placeholder="Seleccionar fecha"
+            styleClass="w-full"
+          />
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('end_date')">
+            {{ getFieldError('end_date') }}
+          </small>
+        </div>
+
+        <div class="flex flex-col md:col-span-2">
+          <label class="block mb-2 font-semibold text-gray-700">Monto Total *</label>
+          <p-inputnumber
+            formControlName="total_amount"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            [min]="0"
+            styleClass="w-full"
+          />
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('total_amount')">
+            {{ getFieldError('total_amount') }}
+          </small>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-8">
+        <div class="bg-gray-50 rounded-lg p-4 flex gap-4 items-center">
+          <button
+            pButton
+            type="submit"
+            class="p-button bg-blue-500 hover:bg-blue-600 text-white"
+            label="Actualizar"
+            icon="pi pi-save"
+            [loading]="loading"
+            [disabled]="loading"
+          ></button>
+          <button
+            pButton
+            type="button"
+            class="p-button p-button-secondary"
+            label="Cancelar"
+            icon="pi pi-times"
+            (click)="cancelar()"
+            [disabled]="loading"
+          ></button>
+        </div>
+      </div>
+    </form>
+
+    <div class="flex justify-center" *ngIf="loading">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>

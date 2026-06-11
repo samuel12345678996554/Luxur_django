@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import Client
-from luxur.myapps.properties.models import Property
 from django.contrib.auth.hashers import make_password
+
+from .models import Client, Visit, ClientEvaluation
+
 
 class ClientSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False, allow_blank=True)
@@ -11,33 +12,29 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
+        password = validated_data.get('password')
         if password:
-            # Hashear la contraseña antes de guardar
             validated_data['password'] = make_password(password)
-        client = super().create(validated_data)
-        return client
+        return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        password = validated_data.pop('password', None)
+        password = validated_data.get('password')
         if password:
             validated_data['password'] = make_password(password)
-        client = super().update(instance, validated_data)
-        return client
+        return super().update(instance, validated_data)
 
-class PropertySerializer(serializers.ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(
-        queryset=Client.objects.all(),
-        required=False,
-        allow_null=True
-    )
+
+class VisitSerializer(serializers.ModelSerializer):
+    client_name = serializers.CharField(source='client.name', read_only=True)
 
     class Meta:
-        model = Property
+        model = Visit
         fields = '__all__'
 
-    def update(self, instance, validated_data):
-        if 'owner' in validated_data and validated_data['owner'] is None:
-            # Permitir quitar propietario
-            pass
-        return super().update(instance, validated_data)
+
+class ClientEvaluationSerializer(serializers.ModelSerializer):
+    client_name = serializers.CharField(source='client.name', read_only=True)
+
+    class Meta:
+        model = ClientEvaluation
+        fields = '__all__'

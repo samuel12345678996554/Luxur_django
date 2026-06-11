@@ -1,0 +1,137 @@
+<div class="card p-6 bg-white rounded-xl shadow">
+
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <h2 class="text-2xl font-bold m-0">Gestión de Propietarios</h2>
+      <p class="text-gray-500 m-0">
+        Total registrados: {{ owners.length }}
+      </p>
+    </div>
+
+    <p-button
+      label="Nuevo Propietario"
+      icon="pi pi-plus"
+      [routerLink]="['/owner/create']"
+      styleClass="p-button-success">
+    </p-button>
+  </div>
+
+  <div class="mb-4">
+    <span class="p-input-icon-left w-full">
+      <i class="pi pi-search"></i>
+
+      <input
+        pInputText
+        type="text"
+        class="w-full"
+        placeholder="Buscar por nombre, contacto o email..."
+        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+    </span>
+  </div>
+
+  <p-table
+    #dt
+    [value]="owners"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+    [globalFilterFields]="['name', 'contact', 'email']"
+    dataKey="id"
+    responsiveLayout="scroll"
+    styleClass="p-datatable-striped p-datatable-gridlines"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">
+          ID <p-sortIcon field="id"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="name">
+          Nombre <p-sortIcon field="name"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="contact">
+          Contacto <p-sortIcon field="contact"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="email">
+          Email <p-sortIcon field="email"></p-sortIcon>
+        </th>
+
+        <th class="text-center">
+          Acciones
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-owner>
+      <tr>
+        <td>
+          <span class="font-semibold">#{{ owner.id }}</span>
+        </td>
+
+        <td>
+          <span class="font-semibold text-gray-800">
+            {{ owner.name }}
+          </span>
+        </td>
+
+        <td>{{ owner.contact }}</td>
+
+        <td>{{ owner.email }}</td>
+
+        <td class="text-center">
+          <div class="flex justify-center gap-2">
+
+            <p-button
+              icon="pi pi-pencil"
+              [routerLink]="['/owner/update', owner.id]"
+              styleClass="p-button-rounded p-button-text p-button-warning"
+              pTooltip="Editar"
+              tooltipPosition="top">
+            </p-button>
+
+            <p-button
+              icon="pi pi-trash"
+              (onClick)="confirmDelete(owner)"
+              styleClass="p-button-rounded p-button-text p-button-danger"
+              pTooltip="Eliminar"
+              tooltipPosition="top">
+            </p-button>
+
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="text-center p-6">
+          <div class="flex flex-col items-center gap-3">
+            <i class="pi pi-user text-4xl text-gray-400"></i>
+
+            <span class="text-gray-500">
+              No se encontraron propietarios
+            </span>
+
+            <p-button
+              label="Crear Primer Propietario"
+              icon="pi pi-plus"
+              [routerLink]="['/owner/create']"
+              styleClass="p-button-sm p-button-outlined">
+            </p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>

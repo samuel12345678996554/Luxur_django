@@ -1,0 +1,31 @@
+<main class="min-h-screen flex flex-col">
+
+  <ng-container *ngIf="!showLayout">
+    <router-outlet></router-outlet>
+  </ng-container>
+
+  <ng-container *ngIf="showLayout">
+
+    <header class="h-16 bg-white border-b">
+      <app-header></app-header>
+    </header>
+
+    <div class="flex flex-1">
+
+      <aside class="w-64 bg-gray-800">
+        <app-aside></app-aside>
+      </aside>
+
+      <section class="flex-1 p-4 bg-gray-50">
+        <router-outlet></router-outlet>
+      </section>
+
+    </div>
+
+    <footer class="h-16 border-t bg-white">
+      <app-footer></app-footer>
+    </footer>
+
+  </ng-container>
+
+</main>

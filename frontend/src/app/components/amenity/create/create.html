@@ -1,0 +1,41 @@
+<div class="card p-6 bg-white rounded-xl shadow">
+
+  <h2 class="text-2xl font-bold mb-4">
+    Nueva Amenidad
+  </h2>
+
+  <div class="field mb-4">
+    <label class="block mb-2 font-semibold">
+      Nombre
+    </label>
+
+    <input
+      pInputText
+      [(ngModel)]="amenity.name"
+      class="w-full"
+      placeholder="Ej: Piscina">
+  </div>
+
+  <div class="flex gap-2">
+
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      (onClick)="save()"
+      [loading]="loading">
+    </p-button>
+
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      routerLink="/amenity">
+    </button>
+
+  </div>
+
+</div>
+
+<p-toast></p-toast>

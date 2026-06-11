@@ -1,0 +1,80 @@
+<div class="max-w-3xl mx-auto p-6">
+  <div class="bg-white rounded-xl shadow p-8">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">
+      Actualizar Propietario
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="grid grid-cols-1 gap-5">
+
+        <div class="flex flex-col">
+          <label class="mb-2 font-semibold text-gray-700">Nombre *</label>
+          <input
+            pInputText
+            formControlName="name"
+            placeholder="Ingrese el nombre del propietario" />
+
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('name')">
+            {{ getFieldError('name') }}
+          </small>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mb-2 font-semibold text-gray-700">Contacto *</label>
+          <input
+            pInputText
+            formControlName="contact"
+            placeholder="Ingrese teléfono o contacto" />
+
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('contact')">
+            {{ getFieldError('contact') }}
+          </small>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mb-2 font-semibold text-gray-700">Email *</label>
+          <input
+            pInputText
+            type="email"
+            formControlName="email"
+            placeholder="Ingrese correo electrónico" />
+
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('email')">
+            {{ getFieldError('email') }}
+          </small>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end gap-3 mt-8">
+
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-secondary"
+          (click)="cancelar()"
+          [disabled]="loading">
+        </button>
+
+        <button
+          pButton
+          type="submit"
+          label="Actualizar"
+          icon="pi pi-save"
+          class="p-button-success"
+          [loading]="loading"
+          [disabled]="form.invalid || loading">
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<p-toast></p-toast>

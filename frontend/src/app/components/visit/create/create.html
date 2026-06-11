@@ -1,0 +1,71 @@
+<div class="card p-6 bg-white rounded-xl shadow">
+
+  <h2 class="text-2xl font-bold mb-4">
+    Nueva Visita
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+    <div>
+      <label class="block mb-2 font-semibold">Cliente</label>
+
+      <p-select
+        [(ngModel)]="visit.client"
+        [options]="clients"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Seleccione cliente"
+        styleClass="w-full">
+      </p-select>
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Fecha</label>
+
+      <p-datepicker
+        [(ngModel)]="visit.date"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        appendTo="body"
+        styleClass="w-full"
+        inputStyleClass="w-full">
+      </p-datepicker>
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="block mb-2 font-semibold">Observaciones</label>
+
+      <textarea
+        pTextarea
+        [(ngModel)]="visit.observations"
+        rows="4"
+        class="w-full"
+        placeholder="Ingrese observaciones de la visita">
+      </textarea>
+    </div>
+
+  </div>
+
+  <div class="flex gap-2 mt-6">
+
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      (onClick)="save()"
+      [loading]="loading">
+    </p-button>
+
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      routerLink="/visit">
+    </button>
+
+  </div>
+
+</div>
+
+<p-toast></p-toast>

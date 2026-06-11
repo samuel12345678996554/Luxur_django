@@ -429,7 +429,7 @@ ng serve --port 4300
 
 ## 👨‍💻 Autor
 
-**Desarrollado por [Samuel Prada]**
+**Desarrollado por Samuel Prada**
 
 Hecho con ❤️ por [Samuel Prada]
 

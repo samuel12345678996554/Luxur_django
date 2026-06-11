@@ -1,0 +1,112 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+
+  <p-card class="w-full max-w-md shadow-4">
+
+    <ng-template pTemplate="header">
+      <div class="text-center pt-6">
+
+        <div
+          class="w-16 h-16 bg-black rounded-md flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">
+          L
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-800">
+          Luxur
+        </h2>
+
+        <p class="text-gray-600 mt-2">
+          Inicia sesión en tu cuenta
+        </p>
+
+      </div>
+    </ng-template>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="space-y-4 p-3">
+
+      <!-- Usuario -->
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Usuario
+        </label>
+
+        <input
+          pInputText
+          type="text"
+          formControlName="username"
+          placeholder="Ingrese su usuario"
+          class="w-full" />
+
+        <small
+          *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+          class="text-red-500">
+          El usuario es obligatorio
+        </small>
+
+      </div>
+
+      <!-- Contraseña -->
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Contraseña
+        </label>
+
+        <input
+          pInputText
+          type="password"
+          formControlName="password"
+          placeholder="Ingrese su contraseña"
+          class="w-full" />
+
+        <small
+          *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          class="text-red-500">
+          La contraseña es obligatoria
+        </small>
+
+      </div>
+
+      <!-- Recuperar contraseña -->
+      <div class="text-right">
+
+        <a
+          class="text-blue-600 hover:text-blue-800 cursor-pointer text-sm font-medium"
+          (click)="goToForgotPassword()">
+
+          ¿Olvidaste tu contraseña?
+
+        </a>
+
+      </div>
+
+      <!-- Botón -->
+      <button
+        pButton
+        type="submit"
+        label="Iniciar Sesión"
+        icon="pi pi-sign-in"
+        class="w-full p-button-primary"
+        [loading]="loading"
+        [disabled]="loginForm.invalid || loading">
+
+      </button>
+
+    </form>
+
+    <ng-template pTemplate="footer">
+
+      <div class="text-center text-gray-500 text-sm">
+        Sistema de Gestión Inmobiliaria
+      </div>
+
+    </ng-template>
+
+  </p-card>
+
+</div>
+
+<p-toast></p-toast>

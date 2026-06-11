@@ -1,0 +1,25 @@
+<header class="h-16 bg-white shadow flex items-center justify-between px-6">
+  <div class="flex items-center gap-3">
+    <div class="w-8 h-8 bg-black rounded-md flex items-center justify-center text-white font-bold">
+      L
+    </div>
+    <h1 class="text-xl font-semibold tracking-wide">
+      Bienvenido a <span class="text-blue-600">Luxur</span>
+    </h1>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <span class="text-gray-600">Administrador</span>
+    <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
+         alt="User avatar"
+         class="w-10 h-10 rounded-full shadow" />
+    <button
+      pButton
+      icon="pi pi-sign-out"
+      class="p-button-rounded p-button-text p-button-danger"
+      (click)="logout()"
+      pTooltip="Cerrar sesión"
+      tooltipPosition="bottom"
+    ></button>
+  </div>
+</header>

@@ -1,11 +1,18 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from .models import Owner, PropertyType, Amenity, Property
-from .serializers import OwnerSerializer, PropertyTypeSerializer, AmenitySerializer, PropertySerializer
 
-class OwnerViewSet(viewsets.ModelViewSet):
-    queryset = Owner.objects.all()
-    serializer_class = OwnerSerializer
+from .models import Property, PropertyType, Amenity, PropertyAmenity
+from .serializers import (
+    PropertySerializer,
+    PropertyTypeSerializer,
+    AmenitySerializer,
+    PropertyAmenitySerializer
+)
+
+
+class PropertyViewSet(viewsets.ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
     permission_classes = [AllowAny]
 
 
@@ -21,7 +28,7 @@ class AmenityViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
 
-class PropertyViewSet(viewsets.ModelViewSet):
-    queryset = Property.objects.all()
-    serializer_class = PropertySerializer
+class PropertyAmenityViewSet(viewsets.ModelViewSet):
+    queryset = PropertyAmenity.objects.all()
+    serializer_class = PropertyAmenitySerializer
     permission_classes = [AllowAny]
