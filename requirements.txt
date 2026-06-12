@@ -14,7 +14,6 @@ kiwisolver==1.5.0
 lark-parser==0.12.0
 matplotlib==3.10.9
 numpy==2.4.6
-oracledb==4.0.1
 packaging==26.2
 pillow==12.2.0
 pycparser==3.0
