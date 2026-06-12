@@ -1,438 +1,302 @@
-# 🏢 Sistema de Gestión Luxur
+# 🏢 LUXUR - Sistema de Gestión Inmobiliaria
 
-
-
-> Plataforma integral para la administración de clientes, contratos y propiedades con interfaz moderna y segura.
+LUXUR es una plataforma web desarrollada para la administración integral de procesos inmobiliarios. Permite gestionar clientes, propietarios, propiedades, contratos, pagos y visitas mediante una arquitectura moderna basada en Angular y Django REST Framework.
 
 ---
 
-## 📑 Tabla de Contenidos
+# ✨ Funcionalidades
 
-- [Descripción](#-descripción)
-- [Características](#-características-principales)
-- [Tecnologías](#-tecnologías)
-- [Requisitos Previos](#-requisitos-previos)
-- [Instalación](#️-instalación)
-- [Configuración](#️-configuración)
-- [Uso](#-uso)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Capturas de Pantalla](#-capturas-de-pantalla)
-- [Roles y Permisos](#-roles-y-permisos)
-- [API REST](#-api-rest)
-- [Validaciones](#-validaciones-y-reglas-de-negocio)
-- [Preguntas Frecuentes](#-preguntas-frecuentes)
-- [Roadmap](#-roadmap)
-- [Contribuir](#-contribuir)
-- [Soporte](#-soporte)
-- [Licencia](#-licencia)
-- [Autor](#-autor)
+## 👥 Clientes
+- Registrar clientes.
+- Actualizar información.
+- Eliminar registros.
+- Buscar clientes por nombre o cédula.
 
+## 🏠 Propiedades
+- Crear propiedades.
+- Gestionar tipos de propiedad.
+- Gestionar amenidades.
+- Estados de propiedades:
+  - Disponible
+  - Alquilada
+  - Vendida
+  - En mantenimiento
 
+## 👤 Propietarios
+- Registro y administración de propietarios.
+- Asociación de propiedades.
 
-## 📖 Descripción
+## 📄 Contratos
+- Contratos de alquiler.
+- Contratos de venta.
+- Relación entre clientes y propiedades.
+- Actualización automática del estado de las propiedades.
 
-**Sistema de Gestión Luxur** es una aplicación web completa diseñada para centralizar y optimizar la gestión de registros empresariales. Permite administrar clientes, propiedades y contratos mediante una interfaz intuitiva construida con Angular y PrimeNG, respaldada por un robusto backend en Django.
+## 💰 Pagos
+- Registro de pagos.
+- Métodos de pago.
+- Historial de pagos.
 
-### Objetivo
+## 📅 Visitas
+- Programación de visitas.
+- Seguimiento de clientes interesados.
+- Estados:
+  - Pendiente
+  - Realizada
+  - Interesado
+  - No interesado
 
-Proporcionar una herramienta administrativa robusta, organizada y fácil de usar que permita:
-- Centralizar información crítica del negocio
-- Automatizar procesos de registro y seguimiento
-- Garantizar seguridad mediante autenticación y control de roles
-- Optimizar la toma de decisiones con datos organizados
+## 📊 Dashboard
+Indicadores automáticos:
 
----
+- Clientes registrados
+- Propiedades registradas
+- Contratos registrados
+- Pagos realizados
+- Visitas registradas
+- Propiedades disponibles
+- Propiedades alquiladas
+- Propiedades vendidas
+- Visitas pendientes
+- Ingresos generados
 
-## ✨ Características Principales
-
-- 🔐 **Autenticación segura** con control de sesiones
-- 👥 **Gestión completa de clientes** (crear, listar, editar, eliminar)
-- 🏠 **Administración de propiedades** con información detallada
-- 📄 **Control integral de contratos** vinculados a clientes y propiedades
-- 🎨 **Interfaz moderna y responsive** con PrimeNG
-- 🔄 **Operaciones CRUD completas** en todos los módulos
-- ⚡ **API REST robusta** con Django REST Framework
-- ✅ **Validaciones en tiempo real** en formularios
-- 🔔 **Sistema de notificaciones** para operaciones exitosas/fallidas
-- 🛡️ **Control de acceso basado en roles** (Administrador/Usuario)
-- 📱 **Diseño responsive** compatible con dispositivos móviles
-- 🗂️ **Organización jerárquica** de información
-
----
-
-## 🧰 Tecnologías
-
-### Frontend
-- **Angular** 17+
-- **TypeScript** 5.x
-- **PrimeNG** (componentes UI)
-- **HTML5** / **CSS3**
-- **RxJS** (programación reactiva)
-
-### Backend
-- **Python** 3.10+
-- **Django** 4.x
-- **Django REST Framework** 3.x
-- **MySQL** / **PostgreSQL** / **SQLite**
-
-### Herramientas de Desarrollo
-- **Node.js** 18+
-- **npm** / **yarn**
-- **Git** (control de versiones)
-- **Postman** (testing API)
+## 🔐 Seguridad
+- JWT Authentication
+- Angular Guards
+- HTTP Interceptor
+- Protección de rutas privadas
 
 ---
 
-## 📋 Requisitos Previos
+# 🛠 Tecnologías Utilizadas
 
-Asegúrate de tener instalado:
+## Frontend
 
-- **Node.js** 18 o superior → [Descargar](https://nodejs.org/)
-- **Python** 3.10 o superior → [Descargar](https://www.python.org/)
-- **Git** → [Descargar](https://git-scm.com/)
-- **MySQL** / **PostgreSQL** (opcional, SQLite incluido)
-- Navegador moderno (Chrome, Firefox, Edge)
+- Angular
+- TypeScript
+- PrimeNG
+- Tailwind CSS
+- RxJS
+
+## Backend
+
+- Python
+- Django 4.2
+- Django REST Framework
+- Simple JWT
+- Django CORS Headers
+
+## Base de Datos
+
+- MySQL
 
 ---
 
-## 🛠️ Instalación
+# 📦 Dependencias Backend
 
-### 1. Clonar el Repositorio
-
-```bash
-git clone https://github.com/tu-usuario/sistema-luxur.git
-cd sistema-luxur
+```txt
+Django==4.2.23
+django-cors-headers==4.9.0
+django-extensions==4.1
+djangorestframework==3.17.1
+djangorestframework_simplejwt==5.5.1
+python-decouple==3.8
+PyMySQL==1.2.0
+Pillow==12.2.0
 ```
 
-### 2. Configurar el Backend (Django)
+---
+
+# 📂 Estructura del Proyecto
+
+```
+luxur/
+│
+├── myapps/
+│   ├── clients/
+│   ├── owners/
+│   ├── properties/
+│   ├── contracts/
+│   ├── payments/
+│   └── visits/
+│
+├── settings.py
+├── urls.py
+├── wsgi.py
+└── asgi.py
+```
+
+---
+
+# 🚀 Instalación Backend
+
+## Clonar repositorio
 
 ```bash
-# Navegar a la carpeta backend
-cd backend
+git clone https://github.com/samuel12345678996554/Luxur_django.git
+cd Luxur_django
+```
 
-# Crear entorno virtual
+## Crear entorno virtual
+
+```bash
 python -m venv venv
+```
 
-# Activar entorno virtual
-# En Windows:
+## Activar entorno virtual
+
+### Windows
+
+```bash
 venv\Scripts\activate
-# En macOS/Linux:
+```
+
+### Linux / Mac
+
+```bash
 source venv/bin/activate
+```
 
-# Instalar dependencias
+## Instalar dependencias
+
+```bash
 pip install -r requirements.txt
+```
 
-# Aplicar migraciones
+## Configurar variables de entorno
+
+Crear archivo:
+
+```env
+.env
+```
+
+Ejemplo:
+
+```env
+SECRET_KEY=tu_clave
+
+DB_NAME=luxur
+DB_USER=root
+DB_PASSWORD=123456
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+## Migraciones
+
+```bash
+python manage.py makemigrations
 python manage.py migrate
+```
 
-# Crear superusuario (administrador)
+## Crear superusuario
+
+```bash
 python manage.py createsuperuser
+```
 
-# Cargar datos de prueba (opcional)
-python manage.py loaddata fixtures/initial_data.json
+## Ejecutar servidor
 
-# Ejecutar servidor
+```bash
 python manage.py runserver
 ```
 
-El backend estará disponible en: `http://localhost:8000`
+Backend:
 
-### 3. Configurar el Frontend (Angular)
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+# 🌐 Frontend
+
+## Instalar dependencias
 
 ```bash
-# Abrir nueva terminal y navegar al frontend
-cd frontend
-
-# Instalar dependencias
 npm install
-
-# Ejecutar servidor de desarrollo
-ng serve --open
 ```
 
-El frontend se abrirá automáticamente en: `http://localhost:4200`
-
----
-
-## ⚙️ Configuración
-
-### Variables de Entorno (Backend)
-
-Crea un archivo `.env` en la carpeta `backend/`:
-
-```env
-# Django
-DEBUG=True
-SECRET_KEY=tu-clave-secreta-super-segura
-ALLOWED_HOSTS=localhost,127.0.0.1
-
-# Base de datos
-DATABASE_ENGINE=django.db.backends.mysql
-DATABASE_NAME=luxur_db
-DATABASE_USER=root
-DATABASE_PASSWORD=tu_password
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
-
-# CORS
-CORS_ALLOWED_ORIGINS=http://localhost:4200
-```
-
-### Configuración de la Base de Datos
-
-#### Opción 1: MySQL
-
-```sql
-CREATE DATABASE luxur_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'luxur_user'@'localhost' IDENTIFIED BY 'password123';
-GRANT ALL PRIVILEGES ON luxur_db.* TO 'luxur_user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-#### Opción 2: PostgreSQL
-
-```sql
-CREATE DATABASE luxur_db;
-CREATE USER luxur_user WITH PASSWORD 'password123';
-GRANT ALL PRIVILEGES ON DATABASE luxur_db TO luxur_user;
-```
-
-#### Opción 3: SQLite (por defecto)
-
-No requiere configuración adicional, se crea automáticamente.
-
----
-
-## 🚀 Uso
-
-### Inicio de Sesión
-
-1. Abre tu navegador en `http://localhost:4200`
-2. Ingresa tus credenciales:
-   - **User**: .samuel_prada
-   - **Contraseña**: 55959635Sa
-3. Serás redirigido al panel principal
-
-### Flujo de Trabajo Típico
-
-1. **Registrar un Cliente**
-   - Ve al módulo "Clientes"
-   - Haz clic en el botón ➕ "Nuevo Cliente"
-   - Completa el formulario con los datos requeridos
-   - Guarda el registro
-
-2. **Registrar una Propiedad**
-   - Navega a "Propiedades"
-   - Crea una nueva propiedad
-   - Asocia información relevante (dirección, tipo, valor)
-
-3. **Crear un Contrato**
-   - Ve al módulo "Contratos"
-   - Selecciona cliente y propiedad desde los selectores
-   - Define términos del contrato
-   - Genera el contrato
-
-4. **Gestión de Registros**
-   - Edita: Haz clic en el ícono ✏️ del registro
-   - Elimina: Haz clic en el ícono 🗑️ (aparecerá confirmación)
-   - Busca: Usa los filtros disponibles en cada módulo
-
----
-
-## 📁 Estructura del Proyecto
-
-```
-sistema-luxur/
-│
-├── backend/                    # Django Backend
-│   ├── api/                   # API REST
-│   │   ├── models.py         # Modelos de datos
-│   │   ├── serializers.py    # Serializadores
-│   │   ├── views.py          # Vistas/Endpoints
-│   │   └── urls.py           # Rutas
-│   ├── luxur/                # Configuración principal
-│   │   ├── settings.py       # Configuración Django
-│   │   └── urls.py           # URLs principales
-│   ├── manage.py             # Script Django
-│   └── requirements.txt      # Dependencias Python
-│
-├── frontend/                  # Angular Frontend
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── components/   # Componentes
-│   │   │   ├── services/     # Servicios HTTP
-│   │   │   ├── models/       # Interfaces TypeScript
-│   │   │   ├── guards/       # Protección de rutas
-│   │   │   └── app.routes.ts # Rutas Angular
-│   │   ├── assets/           # Recursos estáticos
-│   │   └── styles.css        # Estilos globales
-│   ├── angular.json          # Configuración Angular
-│   ├── package.json          # Dependencias npm
-│   └── tsconfig.json         # Configuración TypeScript
-│
-└── docs/                      # Documentación
-    ├── img/                  # Capturas de pantalla
-    └── manual_usuario.md     # Manual de usuario
-```
-
----
-
-## 📸 Capturas de Pantalla
-
-### Pantalla de Login
-<div align="center">
-  <img src="./docs/img/login.png" alt="Login" width="80%">
-</div>
-
-### Módulo de Clientes
-<div align="center">
-  <img src="./docs/img/client_list.png" alt="Lista de clientes" width="45%">
-  <img src="./docs/img/client_crear.png" alt="Crear cliente" width="45%">
-</div>
-
-### Módulo de Propiedades
-<div align="center">
-  <img src="./docs/img/property_list.png" alt="Lista de propiedades" width="45%">
-  <img src="./docs/img/property_crear.png" alt="Crear propiedad" width="45%">
-</div>
-
-### Módulo de Contratos
-<div align="center">
-  <img src="./docs/img/contracts_list.png" alt="Lista de contratos" width="45%">
-  <img src="./docs/img/contracts_crear.png" alt="Crear contrato" width="45%">
-</div>
-
----
-
-## 🧑‍💼 Roles y Permisos
-
-### Administrador
-✅ Acceso completo a todos los módulos  
-✅ Crear, editar y eliminar registros  
-✅ Gestionar usuarios  
-✅ Configuración del sistema  
-
-### Usuario
-✅ Visualizar información  
-✅ Crear registros básicos  
-⛔ Eliminar registros críticos (restringido)  
-⛔ Gestionar usuarios (restringido)  
-
----
-
-## 🔌 API REST
-
-### Endpoints Principales
-
-#### Autenticación
-```http
-POST /api/auth/login
-POST /api/auth/logout
-POST /api/auth/register
-```
-
-#### Clientes
-```http
-GET    /api/clientes/          # Listar todos
-POST   /api/clientes/          # Crear nuevo
-GET    /api/clientes/{id}/     # Obtener por ID
-PUT    /api/clientes/{id}/     # Actualizar
-DELETE /api/clientes/{id}/     # Eliminar
-```
-
-#### Propiedades
-```http
-GET    /api/propiedades/       # Listar todas
-POST   /api/propiedades/       # Crear nueva
-GET    /api/propiedades/{id}/  # Obtener por ID
-PUT    /api/propiedades/{id}/  # Actualizar
-DELETE /api/propiedades/{id}/  # Eliminar
-```
-
-#### Contratos
-```http
-GET    /api/contratos/         # Listar todos
-POST   /api/contratos/         # Crear nuevo
-GET    /api/contratos/{id}/    # Obtener por ID
-PUT    /api/contratos/{id}/    # Actualizar
-DELETE /api/contratos/{id}/    # Eliminar
-```
-
-### Ejemplo de Petición (cURL)
+## Ejecutar aplicación
 
 ```bash
-# Login
-curl -X POST http://localhost:8000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "admin@luxur.com", "password": "admin123"}'
+ng serve
+```
 
-# Crear cliente (con token)
-curl -X POST http://localhost:8000/api/clientes/ \
-  -H "Authorization: Bearer tu_token_aqui" \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "Juan Pérez", "email": "juan@email.com", "telefono": "123456789"}'
+Frontend:
+
+```text
+http://localhost:4200
 ```
 
 ---
 
-## 📏 Validaciones y Reglas de Negocio
+# 🔑 API REST
 
-### Validaciones de Campos
+### Clientes
 
-- ✅ Todos los campos obligatorios deben estar completos
-- ✅ Emails deben tener formato válido (ejemplo@dominio.com)
-- ✅ Teléfonos solo números (mínimo 7 dígitos)
-- ✅ Fechas en formato válido (YYYY-MM-DD)
-- ✅ Campos numéricos solo aceptan números
+```http
+/api/clients/
+```
 
-### Reglas de Negocio
+### Propiedades
 
-- 🔒 Usuario debe estar autenticado para acceder
-- 🔒 Operaciones CRUD requieren permisos específicos
-- 🔒 No se puede eliminar cliente con contratos activos
-- 🔒 No se puede eliminar propiedad asociada a contratos
-- 🔒 Un contrato debe tener cliente y propiedad válidos
-- 🔒 La API rechaza datos incompletos o incorrectos
+```http
+/api/properties/
+```
 
-### Mensajes del Sistema
+### Propietarios
 
-- ✔️ **Éxito**: "Registro creado exitosamente"
-- ✔️ **Éxito**: "Registro actualizado correctamente"
-- ✔️ **Éxito**: "Registro eliminado"
-- ❌ **Error**: "Error del servidor. Intente nuevamente"
-- ❌ **Error**: "Campos obligatorios incompletos"
-- ⚠️ **Advertencia**: "¿Está seguro de eliminar este registro?"
+```http
+/api/owners/
+```
+
+### Contratos
+
+```http
+/api/contracts/
+```
+
+### Pagos
+
+```http
+/api/payments/
+```
+
+### Visitas
+
+```http
+/api/visits/
+```
 
 ---
 
-## ❓ Preguntas Frecuentes
+# 📈 Dashboard Inteligente
 
-### ¿Cómo recupero mi contraseña?
+El dashboard actualiza automáticamente:
 
-Actualmente el sistema no tiene recuperación automática. Contacta al administrador o usa el comando:
+- Disponibles
+- Alquiladas
+- Vendidas
+- Visitas pendientes
+- Ingresos
+- Totales generales
 
-```bash
-python manage.py changepassword nombre_usuario
-```
+según la información almacenada en la base de datos.
 
-### ¿Puedo cambiar el puerto del servidor?
+---
 
-**Backend:**
-```bash
-python manage.py runserver 8080
-```
+# 👨‍💻 Desarrolladores
 
-**Frontend:**
-```bash
-ng serve --port 4300
-```
+### Samuel Prada
+Desarrollador Full Stack
 
-## 👨‍💻 Autor
+### Andrés Contreras
+Estudiante de Ingeniería de Sistemas
 
-**Desarrollado por Samuel Prada**
+---
 
-Hecho con ❤️ por [Samuel Prada]
+# 📄 Licencia
 
-</div>
-
-
+Proyecto académico desarrollado con fines educativos y de aprendizaje.

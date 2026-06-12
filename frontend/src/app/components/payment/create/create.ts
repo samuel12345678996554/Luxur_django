@@ -37,6 +37,31 @@ export class Create implements OnInit {
 
   contracts: any[] = [];
 
+  selectedContract: any = null;
+
+  paymentMethods = [
+    {
+      label: 'Efectivo',
+      value: 'CASH'
+    },
+    {
+      label: 'Transferencia',
+      value: 'TRANSFER'
+    },
+    {
+      label: 'Tarjeta',
+      value: 'CARD'
+    },
+    {
+      label: 'Nequi',
+      value: 'NEQUI'
+    },
+    {
+      label: 'Daviplata',
+      value: 'DAVIPLATA'
+    }
+  ];
+
   payment: PaymentI = {
     contract: null,
     amount: 0,
@@ -54,25 +79,60 @@ export class Create implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.contractService.getAllContracts().subscribe({
       next: (data: any) => {
-        this.contracts = Array.isArray(data) ? data : data.results || [];
+
+        this.contracts =
+          Array.isArray(data)
+            ? data
+            : data.results || [];
+
+        console.log(
+          'Contratos cargados:',
+          this.contracts
+        );
+
+      },
+      error: (err) => {
+        console.error(
+          'Error cargando contratos:',
+          err
+        );
       }
     });
+
+  }
+
+  onContractChange(contractId: number): void {
+
+    this.selectedContract =
+      this.contracts.find(
+        c => c.id === contractId
+      );
+
+    console.log(
+      'Contrato seleccionado:',
+      this.selectedContract
+    );
+
   }
 
   save(): void {
+
     if (
       this.payment.contract === null ||
       this.payment.amount <= 0 ||
       !this.payment.date ||
-      !this.payment.method.trim()
+      !this.payment.method
     ) {
+
       this.messageService.add({
         severity: 'warn',
         summary: 'Validación',
         detail: 'Todos los campos son obligatorios'
       });
+
       return;
     }
 
@@ -83,8 +143,12 @@ export class Create implements OnInit {
       date: this.formatDate(this.payment.date)
     };
 
+    console.log('Payload enviado:', payload);
+
     this.paymentService.createPayment(payload).subscribe({
+
       next: () => {
+
         this.messageService.add({
           severity: 'success',
           summary: 'Guardado',
@@ -94,22 +158,35 @@ export class Create implements OnInit {
         setTimeout(() => {
           this.router.navigate(['/payment']);
         }, 800);
+
       },
-      error: () => {
+
+      error: (error) => {
+
+        console.error(error);
+
         this.loading = false;
+
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'No se pudo crear el pago'
         });
+
       }
+
     });
+
   }
 
   formatDate(value: any): string {
+
     if (!value) return '';
 
     const date = new Date(value);
+
     return date.toISOString().split('T')[0];
+
   }
+
 }

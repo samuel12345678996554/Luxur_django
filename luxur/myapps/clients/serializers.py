@@ -25,11 +25,43 @@ class ClientSerializer(serializers.ModelSerializer):
 
 
 class VisitSerializer(serializers.ModelSerializer):
-    client_name = serializers.CharField(source='client.name', read_only=True)
+
+    client_name = serializers.CharField(
+        source='client.name',
+        read_only=True
+    )
+
+    client_cedula = serializers.CharField(
+        source='client.cedula',
+        read_only=True
+    )
+
+    property_title = serializers.CharField(
+        source='property.title',
+        read_only=True
+    )
 
     class Meta:
         model = Visit
-        fields = '__all__'
+
+        fields = [
+            'id',
+
+            # Cliente
+            'client',
+            'client_name',
+            'client_cedula',
+
+            # Propiedad
+            'property',
+            'property_title',
+
+            # Visita
+            'date',
+            'status',
+            'observations',
+            'result'
+        ]
 
 
 class ClientEvaluationSerializer(serializers.ModelSerializer):

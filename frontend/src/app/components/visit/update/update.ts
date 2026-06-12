@@ -13,6 +13,8 @@ import { MessageService } from 'primeng/api';
 
 import { VisitService } from '../../../services/visit.service';
 import { ClientService } from '../../../services/client.service';
+import { PropertyService } from '../../../services/property.service';
+
 import { VisitI, VisitResponseI } from '../../../models/visit';
 
 @Component({
@@ -36,12 +38,38 @@ import { VisitI, VisitResponseI } from '../../../models/visit';
 export class Update implements OnInit {
 
   id!: number;
+
   clients: any[] = [];
+  properties: any[] = [];
+
+  selectedProperty: any = null;
+
+  statusOptions = [
+    {
+      label: 'Pendiente',
+      value: 'PENDING'
+    },
+    {
+      label: 'Realizada',
+      value: 'COMPLETED'
+    },
+    {
+      label: 'Interesado',
+      value: 'INTERESTED'
+    },
+    {
+      label: 'No interesado',
+      value: 'NOT_INTERESTED'
+    }
+  ];
 
   visit: VisitI = {
     client: null,
+    property: null,
     date: '',
-    observations: ''
+    status: 'PENDING',
+    observations: '',
+    result: ''
   };
 
   loading = false;
@@ -51,46 +79,102 @@ export class Update implements OnInit {
     private router: Router,
     private visitService: VisitService,
     private clientService: ClientService,
+    private propertyService: PropertyService,
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.id = Number(
+      this.route.snapshot.paramMap.get('id')
+    );
 
     this.loadClients();
+    this.loadProperties();
     this.loadVisit();
   }
 
   loadClients(): void {
+
     this.clientService.getAllClients().subscribe({
       next: (data: any) => {
-        this.clients = Array.isArray(data) ? data : data.results || [];
+
+        this.clients = Array.isArray(data)
+          ? data
+          : data.results || [];
+
       }
     });
+
+  }
+
+  loadProperties(): void {
+
+    this.propertyService.getAllProperties().subscribe({
+      next: (data: any) => {
+
+        this.properties = Array.isArray(data)
+          ? data
+          : data.results || [];
+
+      }
+    });
+
+  }
+
+  onPropertyChange(propertyId: number): void {
+
+    this.selectedProperty =
+      this.properties.find(
+        p => p.id === propertyId
+      );
+
   }
 
   loadVisit(): void {
+
     this.visitService.getVisitById(this.id).subscribe({
+
       next: (data: VisitResponseI) => {
+
         this.visit = {
           client: data.client,
+          property: data.property,
           date: data.date,
-          observations: data.observations
+          status: data.status,
+          observations: data.observations,
+          result: data.result
         };
+
+        this.onPropertyChange(data.property);
+
       },
+
       error: () => {
+
         this.router.navigate(['/visit']);
+
       }
+
     });
+
   }
 
   update(): void {
-    if (this.visit.client === null || !this.visit.date) {
+
+    if (
+      this.visit.client === null ||
+      this.visit.property === null ||
+      !this.visit.date
+    ) {
+
       this.messageService.add({
         severity: 'warn',
         summary: 'Validación',
-        detail: 'Cliente y fecha son obligatorios'
+        detail:
+          'Cliente, propiedad y fecha son obligatorios'
       });
+
       return;
     }
 
@@ -101,8 +185,13 @@ export class Update implements OnInit {
 
     this.loading = true;
 
-    this.visitService.updateVisit(this.id, payload).subscribe({
+    this.visitService.updateVisit(
+      this.id,
+      payload
+    ).subscribe({
+
       next: () => {
+
         this.messageService.add({
           severity: 'success',
           summary: 'Actualizado',
@@ -111,20 +200,28 @@ export class Update implements OnInit {
 
         setTimeout(() => {
           this.router.navigate(['/visit']);
-        }, 800);
+        }, 1000);
+
       },
+
       error: () => {
+
         this.loading = false;
+
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'No se pudo actualizar la visita'
         });
+
       }
+
     });
+
   }
 
   formatDate(value: any): string {
+
     if (!value) return '';
 
     if (typeof value === 'string') {
@@ -132,6 +229,9 @@ export class Update implements OnInit {
     }
 
     const date = new Date(value);
+
     return date.toISOString().split('T')[0];
+
   }
+
 }

@@ -1,106 +1,220 @@
 <div class="max-w-4xl mx-auto p-6">
-  <div class="bg-white rounded-lg shadow-lg p-8">
-    <h2 class="text-2xl font-bold mb-6 text-gray-800">Editar Contrato</h2>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading">
+  <div class="bg-white rounded-lg shadow-lg p-8">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">
+      Editar Contrato
+    </h2>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      *ngIf="!loading">
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- CLIENTE -->
+
         <div class="flex flex-col">
-          <label class="block mb-2 font-semibold text-gray-700">Cliente *</label>
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Cliente *
+          </label>
+
           <p-select
             formControlName="client"
             [options]="clientOptions"
             placeholder="Seleccionar cliente"
             [filter]="true"
             filterPlaceholder="Buscar cliente"
-            styleClass="w-full"
-          />
-          <small class="text-red-500 mt-1" *ngIf="getFieldError('client')">
+            styleClass="w-full">
+          </p-select>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('client')">
+
             {{ getFieldError('client') }}
+
           </small>
+
         </div>
 
+        <!-- PROPIEDAD -->
+
         <div class="flex flex-col">
-          <label class="block mb-2 font-semibold text-gray-700">Estado *</label>
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Propiedad *
+          </label>
+
           <p-select
-            formControlName="status"
-            [options]="statusOptions"
-            placeholder="Seleccionar estado"
-            styleClass="w-full"
-          />
+            formControlName="property"
+            [options]="propertyOptions"
+            placeholder="Seleccionar propiedad"
+            [filter]="true"
+            filterPlaceholder="Buscar propiedad"
+            styleClass="w-full">
+          </p-select>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('property')">
+
+            {{ getFieldError('property') }}
+
+          </small>
+
         </div>
 
+        <!-- TIPO DE CONTRATO -->
+
         <div class="flex flex-col">
-          <label class="block mb-2 font-semibold text-gray-700">Fecha Inicio *</label>
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Tipo de Contrato *
+          </label>
+
+          <p-select
+            formControlName="contract_type"
+            [options]="contractTypeOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccione un tipo"
+            styleClass="w-full">
+          </p-select>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('contract_type')">
+
+            {{ getFieldError('contract_type') }}
+
+          </small>
+
+        </div>
+
+        <!-- MONTO -->
+
+        <div class="flex flex-col">
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Monto Total *
+          </label>
+
+          <p-inputNumber
+            formControlName="total_amount"
+            mode="currency"
+            currency="COP"
+            locale="es-CO"
+            [min]="0"
+            styleClass="w-full">
+          </p-inputNumber>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('total_amount')">
+
+            {{ getFieldError('total_amount') }}
+
+          </small>
+
+        </div>
+
+        <!-- FECHA INICIO -->
+
+        <div class="flex flex-col">
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Fecha Inicio *
+          </label>
+
           <p-datepicker
             formControlName="start_date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
-            placeholder="Seleccionar fecha"
-            styleClass="w-full"
-          />
-          <small class="text-red-500 mt-1" *ngIf="getFieldError('start_date')">
+            styleClass="w-full">
+          </p-datepicker>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('start_date')">
+
             {{ getFieldError('start_date') }}
+
           </small>
+
         </div>
 
+        <!-- FECHA FIN -->
+
         <div class="flex flex-col">
-          <label class="block mb-2 font-semibold text-gray-700">Fecha Fin *</label>
+
+          <label class="block mb-2 font-semibold text-gray-700">
+            Fecha Fin *
+          </label>
+
           <p-datepicker
             formControlName="end_date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
-            placeholder="Seleccionar fecha"
-            styleClass="w-full"
-          />
-          <small class="text-red-500 mt-1" *ngIf="getFieldError('end_date')">
+            styleClass="w-full">
+          </p-datepicker>
+
+          <small
+            class="text-red-500 mt-1"
+            *ngIf="getFieldError('end_date')">
+
             {{ getFieldError('end_date') }}
+
           </small>
+
         </div>
 
-        <div class="flex flex-col md:col-span-2">
-          <label class="block mb-2 font-semibold text-gray-700">Monto Total *</label>
-          <p-inputnumber
-            formControlName="total_amount"
-            mode="currency"
-            currency="USD"
-            locale="en-US"
-            [min]="0"
-            styleClass="w-full"
-          />
-          <small class="text-red-500 mt-1" *ngIf="getFieldError('total_amount')">
-            {{ getFieldError('total_amount') }}
-          </small>
-        </div>
       </div>
 
       <div class="flex justify-center mt-8">
+
         <div class="bg-gray-50 rounded-lg p-4 flex gap-4 items-center">
+
           <button
             pButton
             type="submit"
-            class="p-button bg-blue-500 hover:bg-blue-600 text-white"
             label="Actualizar"
             icon="pi pi-save"
             [loading]="loading"
-            [disabled]="loading"
-          ></button>
+            [disabled]="loading">
+          </button>
+
           <button
             pButton
             type="button"
-            class="p-button p-button-secondary"
+            class="p-button-secondary"
             label="Cancelar"
             icon="pi pi-times"
             (click)="cancelar()"
-            [disabled]="loading"
-          ></button>
+            [disabled]="loading">
+          </button>
+
         </div>
+
       </div>
+
     </form>
 
-    <div class="flex justify-center" *ngIf="loading">
-      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <div
+      class="flex justify-center"
+      *ngIf="loading">
+
+      <i
+        class="pi pi-spin pi-spinner"
+        style="font-size: 2rem">
+      </i>
+
     </div>
+
   </div>
+
 </div>
 
 <p-toast></p-toast>

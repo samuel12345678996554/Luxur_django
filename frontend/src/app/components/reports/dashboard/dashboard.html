@@ -1,0 +1,137 @@
+<div class="p-6">
+
+  <!-- TITULO -->
+
+  <div class="mb-8">
+
+    <h1 class="text-4xl font-bold">
+      Dashboard de Reportes
+    </h1>
+
+    <p class="text-gray-500 text-lg">
+      Resumen general del sistema inmobiliario
+    </p>
+
+  </div>
+
+  <!-- PRIMERA SECCION -->
+
+  <div class="mb-10">
+
+    <h2 class="text-xl font-bold mb-1">
+      📊 Resumen General
+    </h2>
+
+    <p class="text-gray-500 mb-4">
+      Información general registrada en el sistema.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+
+      <div
+        *ngFor="let item of stats.slice(0,5)"
+        class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition-all">
+
+        <div class="flex justify-between items-center">
+
+          <div>
+
+            <p class="text-gray-500 text-sm">
+              {{ item.title }}
+            </p>
+
+            <h2 class="text-4xl font-bold mt-2">
+              {{ item.value }}
+            </h2>
+
+          </div>
+
+          <div
+            class="w-14 h-14 rounded-xl flex items-center justify-center text-white"
+            [ngClass]="item.color">
+
+            <i
+              [class]="item.icon"
+              class="text-2xl">
+            </i>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SEGUNDA SECCION -->
+
+  <div>
+
+    <h2 class="text-xl font-bold mb-1">
+      🏢 Indicadores Inmobiliarios
+    </h2>
+
+    <p class="text-gray-500 mb-4">
+      Estado actual de propiedades, visitas e ingresos.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+
+      <div
+        *ngFor="let item of stats.slice(5)"
+        class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition-all">
+
+        <div class="flex justify-between items-center">
+
+          <div class="flex-1">
+
+            <p class="text-gray-500 text-sm">
+              {{ item.title }}
+            </p>
+
+            <h2
+              class="font-bold mt-2"
+              [ngClass]="item.title === 'Ingresos'
+                ? 'text-2xl'
+                : 'text-4xl'">
+
+              <ng-container
+                *ngIf="item.title === 'Ingresos'; else normalValue">
+
+                {{
+                  item.value
+                  | currency:'COP':'symbol-narrow':'1.0-0'
+                }}
+
+              </ng-container>
+
+              <ng-template #normalValue>
+                {{ item.value }}
+              </ng-template>
+
+            </h2>
+
+          </div>
+
+          <div
+            class="w-14 h-14 rounded-xl flex items-center justify-center text-white ml-4"
+            [ngClass]="item.color">
+
+            <i
+              [class]="item.icon"
+              class="text-2xl">
+            </i>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -3,8 +3,8 @@ import { authGuard } from './guards/auth.guard';
 
 import { LoginComponent } from './components/auth/login/login';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password';
-
-
+import { Dashboard } from './components/reports/dashboard/dashboard';
+import { Home } from './components/home/home';
 // CLIENT
 import { Getall as ClientGetall } from './components/client/getall/getall';
 import { Create as ClientCreate } from './components/client/create/create';
@@ -43,9 +43,6 @@ import { Getall as VisitGetall } from './components/visit/getall/getall';
 import { Create as VisitCreate } from './components/visit/create/create';
 import { Update as VisitUpdate } from './components/visit/update/update';
 
-import { Getall as ClientEvaluationGetall } from './components/client-evaluation/getall/getall';
-import { Create as ClientEvaluationCreate } from './components/client-evaluation/create/create';
-import { Update as ClientEvaluationUpdate } from './components/client-evaluation/update/update';
 
 export const routes: Routes = [
 
@@ -90,16 +87,19 @@ export const routes: Routes = [
     { path: 'payment/create', component: PaymentCreate, canActivate: [authGuard] },
     { path: 'payment/update/:id', component: PaymentUpdate, canActivate: [authGuard] },
 
-    { path: 'visit', component: VisitGetall, canActivate: [authGuard] },
-    { path: 'visit/create', component: VisitCreate, canActivate: [authGuard] },
-    { path: 'visit/update/:id', component: VisitUpdate, canActivate: [authGuard] },
+   // VISITAS
+{ path: 'visit', component: VisitGetall, canActivate: [authGuard] },
+{ path: 'visit/create', component: VisitCreate, canActivate: [authGuard] },
+{ path: 'visit/update/:id', component: VisitUpdate, canActivate: [authGuard] },
 
-    { path: 'client-evaluation', component: ClientEvaluationGetall, canActivate: [authGuard] },
-    { path: 'client-evaluation/create', component: ClientEvaluationCreate, canActivate: [authGuard] },
-    { path: 'client-evaluation/update/:id', component: ClientEvaluationUpdate, canActivate: [authGuard] },
+// HOME
+{ path: 'home', component: Home, canActivate: [authGuard] },
 
+// REPORTES
+{ path: 'reports', component: Dashboard, canActivate: [authGuard] },
 
-    // REDIRECCIONES
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '**', redirectTo: '/login' }
+// REDIRECCIONES
+{ path: '', redirectTo: '/home', pathMatch: 'full' },
+{ path: '**', redirectTo: '/login' }
+
 ];

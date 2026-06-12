@@ -2,18 +2,12 @@
 
   <div class="flex justify-between items-center mb-4">
     <div>
-      <h2 class="text-2xl font-bold m-0">Gestión de Propietarios</h2>
+      <h2 class="text-2xl font-bold m-0">Propiedades Asignadas</h2>
+
       <p class="text-gray-500 m-0">
-        Total registrados: {{ owners.length }}
+        Total asignaciones: {{ contracts.length }}
       </p>
     </div>
-
-    <p-button
-      label="Nuevo Propietario"
-      icon="pi pi-plus"
-      [routerLink]="['/owner/create']"
-      styleClass="p-button-success">
-    </p-button>
   </div>
 
   <div class="mb-4">
@@ -24,107 +18,123 @@
         pInputText
         type="text"
         class="w-full"
-        placeholder="Buscar por nombre, contacto o email..."
+        placeholder="Buscar por cliente, cédula, propiedad o tipo de contrato..."
         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
     </span>
   </div>
 
   <p-table
     #dt
-    [value]="owners"
+    [value]="contracts"
     [loading]="loading"
     [paginator]="true"
     [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-    [rowsPerPageOptions]="[5, 10, 25, 50]"
-    [globalFilterFields]="['name', 'contact', 'email']"
-    dataKey="id"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    [globalFilterFields]="[
+      'client_name',
+      'client_cedula',
+      'property_title',
+      'contract_type'
+    ]"
     responsiveLayout="scroll"
     styleClass="p-datatable-striped p-datatable-gridlines"
-    [tableStyle]="{'min-width': '50rem'}">
+    [tableStyle]="{'min-width':'70rem'}">
+
+    <!-- HEADER -->
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
+
+        <th pSortableColumn="client_name">
+          Cliente
+          <p-sortIcon field="client_name"></p-sortIcon>
         </th>
 
-        <th pSortableColumn="name">
-          Nombre <p-sortIcon field="name"></p-sortIcon>
+        <th pSortableColumn="client_cedula">
+          Cédula
+          <p-sortIcon field="client_cedula"></p-sortIcon>
         </th>
 
-        <th pSortableColumn="contact">
-          Contacto <p-sortIcon field="contact"></p-sortIcon>
+        <th pSortableColumn="property_title">
+          Propiedad
+          <p-sortIcon field="property_title"></p-sortIcon>
         </th>
 
-        <th pSortableColumn="email">
-          Email <p-sortIcon field="email"></p-sortIcon>
+        <th pSortableColumn="contract_type">
+          Tipo Contrato
+          <p-sortIcon field="contract_type"></p-sortIcon>
         </th>
 
-        <th class="text-center">
-          Acciones
+        <th pSortableColumn="start_date">
+          Fecha Inicio
+          <p-sortIcon field="start_date"></p-sortIcon>
         </th>
+
+        <th pSortableColumn="end_date">
+          Fecha Fin
+          <p-sortIcon field="end_date"></p-sortIcon>
+        </th>
+
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-owner>
+    <!-- BODY -->
+
+    <ng-template pTemplate="body" let-contract>
       <tr>
-        <td>
-          <span class="font-semibold">#{{ owner.id }}</span>
-        </td>
 
         <td>
-          <span class="font-semibold text-gray-800">
-            {{ owner.name }}
+          <span class="font-semibold">
+            {{ contract.client_name }}
           </span>
         </td>
 
-        <td>{{ owner.contact }}</td>
-
-        <td>{{ owner.email }}</td>
-
-        <td class="text-center">
-          <div class="flex justify-center gap-2">
-
-            <p-button
-              icon="pi pi-pencil"
-              [routerLink]="['/owner/update', owner.id]"
-              styleClass="p-button-rounded p-button-text p-button-warning"
-              pTooltip="Editar"
-              tooltipPosition="top">
-            </p-button>
-
-            <p-button
-              icon="pi pi-trash"
-              (onClick)="confirmDelete(owner)"
-              styleClass="p-button-rounded p-button-text p-button-danger"
-              pTooltip="Eliminar"
-              tooltipPosition="top">
-            </p-button>
-
-          </div>
+        <td>
+          {{ contract.client_cedula }}
         </td>
+
+        <td>
+          {{ contract.property_title }}
+        </td>
+
+        <td>
+
+          <p-tag
+            [value]="contract.contract_type === 'SALE' ? 'Venta' : 'Alquiler'"
+            [severity]="contract.contract_type === 'SALE' ? 'success' : 'info'">
+          </p-tag>
+
+        </td>
+
+        <td>
+          {{ contract.start_date | date:'dd/MM/yyyy' }}
+        </td>
+
+        <td>
+          {{ contract.end_date | date:'dd/MM/yyyy' }}
+        </td>
+
       </tr>
     </ng-template>
 
+    <!-- EMPTY -->
+
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="5" class="text-center p-6">
+        <td colspan="6" class="text-center p-6">
+
           <div class="flex flex-col items-center gap-3">
-            <i class="pi pi-user text-4xl text-gray-400"></i>
+
+            <i class="pi pi-home text-4xl text-gray-400"></i>
 
             <span class="text-gray-500">
-              No se encontraron propietarios
+              No existen propiedades asignadas
             </span>
 
-            <p-button
-              label="Crear Primer Propietario"
-              icon="pi pi-plus"
-              [routerLink]="['/owner/create']"
-              styleClass="p-button-sm p-button-outlined">
-            </p-button>
           </div>
+
         </td>
       </tr>
     </ng-template>
@@ -133,5 +143,4 @@
 
 </div>
 
-<p-confirmDialog></p-confirmDialog>
 <p-toast></p-toast>

@@ -68,21 +68,47 @@ export class Update implements OnInit {
 
     this.loadContracts();
     this.loadPayment();
+
   }
 
   loadContracts(): void {
+
     this.contractService.getAllContracts().subscribe({
+
       next: (data: any) => {
-        this.contracts =
+
+        const contracts =
           Array.isArray(data)
             ? data
             : data.results || [];
+
+        this.contracts = contracts.map((c: any) => ({
+          label: `${c.client_name} - ${c.property_title}`,
+          value: c.id
+        }));
+
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudieron cargar los contratos'
+        });
+
       }
+
     });
+
   }
 
   loadPayment(): void {
+
     this.paymentService.getPaymentById(this.id).subscribe({
+
       next: (data: PaymentResponseI) => {
 
         this.payment = {
@@ -93,10 +119,13 @@ export class Update implements OnInit {
         };
 
       },
+
       error: () => {
         this.router.navigate(['/payment']);
       }
+
     });
+
   }
 
   update(): void {
@@ -107,20 +136,29 @@ export class Update implements OnInit {
       !this.payment.date ||
       !this.payment.method.trim()
     ) {
+
       this.messageService.add({
         severity: 'warn',
         summary: 'Validación',
         detail: 'Todos los campos son obligatorios'
       });
+
       return;
+
     }
+
+    const payload: PaymentI = {
+      ...this.payment,
+      date: this.formatDate(this.payment.date)
+    };
 
     this.loading = true;
 
     this.paymentService.updatePayment(
       this.id,
-      this.payment
+      payload
     ).subscribe({
+
       next: () => {
 
         this.messageService.add({
@@ -132,7 +170,9 @@ export class Update implements OnInit {
         setTimeout(() => {
           this.router.navigate(['/payment']);
         }, 800);
+
       },
+
       error: () => {
 
         this.loading = false;
@@ -142,7 +182,25 @@ export class Update implements OnInit {
           summary: 'Error',
           detail: 'No se pudo actualizar el pago'
         });
+
       }
+
     });
+
   }
+
+  formatDate(value: any): string {
+
+    if (!value) return '';
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    const date = new Date(value);
+
+    return date.toISOString().split('T')[0];
+
+  }
+
 }

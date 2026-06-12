@@ -16,6 +16,8 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+        <!-- CLIENTE -->
+
         <div class="flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Cliente *</label>
 
@@ -32,6 +34,8 @@
             {{ getFieldError('client') }}
           </small>
         </div>
+
+        <!-- PROPIEDAD -->
 
         <div class="flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Propiedad *</label>
@@ -50,6 +54,25 @@
           </small>
         </div>
 
+        <!-- TIPO DE CONTRATO -->
+
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-gray-700">
+            Tipo de Contrato *
+          </label>
+
+          <p-select
+            formControlName="contract_type"
+            [options]="contractTypeOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccione el tipo"
+            styleClass="w-full block">
+          </p-select>
+        </div>
+
+        <!-- FECHA INICIO -->
+
         <div class="flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Fecha Inicio *</label>
 
@@ -66,6 +89,8 @@
             {{ getFieldError('start_date') }}
           </small>
         </div>
+
+        <!-- FECHA FIN -->
 
         <div class="flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Fecha Fin *</label>
@@ -84,6 +109,8 @@
           </small>
         </div>
 
+        <!-- MONTO -->
+
         <div class="flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Monto Total *</label>
 
@@ -101,6 +128,8 @@
             {{ getFieldError('total_amount') }}
           </small>
         </div>
+
+        <!-- ESTADO -->
 
         <div class="form-field flex flex-col gap-2">
           <label class="font-semibold text-gray-700">Estado *</label>

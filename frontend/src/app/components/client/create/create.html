@@ -4,11 +4,28 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- CÉDULA -->
+        <div class="flex flex-col">
+          <label class="block mb-2 font-semibold text-gray-700">Cédula *</label>
+          <input
+            pInputText
+            formControlName="cedula"
+            class="w-full"
+            placeholder="Ingrese la cédula"
+            [class.ng-invalid]="form.get('cedula')?.invalid && form.get('cedula')?.touched"
+          />
+          <small class="text-red-500 mt-1" *ngIf="getFieldError('cedula')">
+            {{ getFieldError('cedula') }}
+          </small>
+        </div>
+
+        <!-- NOMBRE -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Nombre *</label>
-          <input 
-            pInputText 
-            formControlName="name" 
+          <input
+            pInputText
+            formControlName="name"
             class="w-full"
             [class.ng-invalid]="form.get('name')?.invalid && form.get('name')?.touched"
           />
@@ -17,11 +34,12 @@
           </small>
         </div>
 
+        <!-- DIRECCIÓN -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Dirección *</label>
-          <input 
-            pInputText 
-            formControlName="address" 
+          <input
+            pInputText
+            formControlName="address"
             class="w-full"
             [class.ng-invalid]="form.get('address')?.invalid && form.get('address')?.touched"
           />
@@ -30,11 +48,12 @@
           </small>
         </div>
 
+        <!-- TELÉFONO -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Teléfono *</label>
-          <input 
-            pInputText 
-            formControlName="phone" 
+          <input
+            pInputText
+            formControlName="phone"
             class="w-full"
             placeholder="1234567890"
             [class.ng-invalid]="form.get('phone')?.invalid && form.get('phone')?.touched"
@@ -44,12 +63,13 @@
           </small>
         </div>
 
+        <!-- EMAIL -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Email *</label>
-          <input 
-            pInputText 
+          <input
+            pInputText
             type="email"
-            formControlName="email" 
+            formControlName="email"
             class="w-full"
             [class.ng-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
           />
@@ -58,12 +78,13 @@
           </small>
         </div>
 
+        <!-- CONTRASEÑA -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Contraseña *</label>
-          <input 
-            pInputText 
-            type="password" 
-            formControlName="password" 
+          <input
+            pInputText
+            type="password"
+            formControlName="password"
             class="w-full"
             [class.ng-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
           />
@@ -72,6 +93,7 @@
           </small>
         </div>
 
+        <!-- ESTADO -->
         <div class="flex flex-col">
           <label class="block mb-2 font-semibold text-gray-700">Estado *</label>
           <p-select
@@ -81,6 +103,7 @@
             class="w-full"
           ></p-select>
         </div>
+
       </div>
 
       <div class="flex justify-center mt-8">
@@ -94,6 +117,7 @@
             [loading]="loading"
             [disabled]="loading"
           ></button>
+
           <button
             pButton
             type="button"

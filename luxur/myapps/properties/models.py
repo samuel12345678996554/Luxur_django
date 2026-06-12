@@ -17,12 +17,12 @@ class Amenity(models.Model):
 
 
 class Property(models.Model):
+
     STATUS_CHOICES = [
         ('AVAILABLE', 'Disponible'),
         ('RENTED', 'Alquilada'),
         ('SOLD', 'Vendida'),
         ('MAINTENANCE', 'En Mantenimiento'),
-        ('ACTIVE', 'Activa'),
     ]
 
     title = models.CharField(max_length=100)
@@ -53,8 +53,14 @@ class Property(models.Model):
         blank=True
     )
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='AVAILABLE')
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='AVAILABLE'
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
+
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -62,8 +68,16 @@ class Property(models.Model):
 
 
 class PropertyAmenity(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    amenity = models.ForeignKey(Amenity, on_delete=models.CASCADE)
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE
+    )
+
+    amenity = models.ForeignKey(
+        Amenity,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         unique_together = ['property', 'amenity']

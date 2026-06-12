@@ -1,21 +1,22 @@
 export interface ClientI {
-  id?: number;                     // Opcional, usado en actualización
+  id?: number;
+  cedula: string;
   name: string;
   address: string;
   phone: string;
   email: string;
-  password: string;                // Se envía solo al crear usuario
-  status: "ACTIVE" | "INACTIVE";  // Estado del cliente
+  password: string;
+  status: "ACTIVE" | "INACTIVE";
 }
 
-// Interfaz para recibir datos del backend (respuesta de API)
 export interface ClientResponseI {
   id?: number;
+  cedula: string;
   name: string;
   address: string;
   phone: string;
   email: string;
-  status: "ACTIVE" | "INACTIVE";  // Estado del cliente
-  created_at?: string;             // Fecha de creación (si el backend lo envía)
-  updated_at?: string;             // Fecha de actualización (si el backend lo envía)
+  status: "ACTIVE" | "INACTIVE";
+  created_at?: string;
+  updated_at?: string;
 }

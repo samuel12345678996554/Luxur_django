@@ -13,12 +13,12 @@ import { ClientService } from '../../../services/client.service';
   selector: 'app-client-create',
   standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    ButtonModule,     
-    InputTextModule,   
-    SelectModule,      
-    ToastModule       
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    SelectModule,
+    ToastModule
   ],
   templateUrl: './create.html',
   styleUrl: './create.css',
@@ -27,6 +27,7 @@ import { ClientService } from '../../../services/client.service';
 export class Create {
   form: FormGroup;
   loading: boolean = false;
+
   statusOptions = [
     { label: 'Activo', value: 'ACTIVE' },
     { label: 'Inactivo', value: 'INACTIVE' }
@@ -39,6 +40,11 @@ export class Create {
     private messageService: MessageService
   ) {
     this.form = this.fb.group({
+      cedula: ['', [
+        Validators.required,
+        Validators.pattern(/^\d{6,15}$/)
+      ]],
+
       name: ['', [Validators.required, Validators.minLength(2)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
@@ -51,31 +57,36 @@ export class Create {
   submit(): void {
     if (this.form.valid) {
       this.loading = true;
+
       const clientData = this.form.value;
 
       this.clientService.createClient(clientData).subscribe({
-        next: (response) => {
+        next: () => {
           this.messageService.add({
             severity: 'success',
             summary: 'Éxito',
             detail: 'Cliente creado correctamente'
           });
+
           setTimeout(() => {
             this.router.navigate(['/client']);
           }, 1500);
         },
         error: (error) => {
           console.error('Error creating client:', error);
+
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: error.error?.message || 'Error al crear el cliente'
           });
+
           this.loading = false;
         }
       });
     } else {
       this.markFormGroupTouched();
+
       this.messageService.add({
         severity: 'warn',
         summary: 'Advertencia',
@@ -96,12 +107,16 @@ export class Create {
 
   getFieldError(fieldName: string): string {
     const field = this.form.get(fieldName);
+
     if (field?.errors && field?.touched) {
       if (field.errors['required']) return `${fieldName} es requerido`;
       if (field.errors['email']) return 'Email no válido';
-      if (field.errors['minlength']) return `${fieldName} debe tener al menos ${field.errors['minlength'].requiredLength} caracteres`;
+      if (field.errors['minlength']) {
+        return `${fieldName} debe tener al menos ${field.errors['minlength'].requiredLength} caracteres`;
+      }
       if (field.errors['pattern']) return 'Formato no válido';
     }
+
     return '';
   }
 }

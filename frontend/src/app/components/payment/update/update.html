@@ -1,79 +1,115 @@
-<div class="card p-6 bg-white rounded-xl shadow">
+<div class="max-w-4xl mx-auto p-6">
 
-  <h2 class="text-2xl font-bold mb-4">
-    Editar Pago
-  </h2>
+  <div class="bg-white rounded-lg shadow-lg p-8">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">
+      Editar Pago
+    </h2>
 
-    <div>
-      <label class="block mb-2 font-semibold">
-        Contrato
-      </label>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <p-select
-        [(ngModel)]="payment.contract"
-        [options]="contracts"
-        optionLabel="id"
-        optionValue="id"
-        placeholder="Seleccione contrato"
-        styleClass="w-full">
-      </p-select>
+      <!-- CONTRATO -->
+
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Contrato *
+        </label>
+
+        <p-select
+          [(ngModel)]="payment.contract"
+          [options]="contracts"
+          placeholder="Seleccione un contrato"
+          class="w-full">
+        </p-select>
+
+      </div>
+
+      <!-- MONTO -->
+
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Monto *
+        </label>
+
+        <p-inputNumber
+          [(ngModel)]="payment.amount"
+          mode="currency"
+          currency="COP"
+          locale="es-CO"
+          [min]="0"
+          class="w-full">
+        </p-inputNumber>
+
+      </div>
+
+      <!-- FECHA -->
+
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Fecha *
+        </label>
+
+        <p-datepicker
+          [(ngModel)]="payment.date"
+          dateFormat="yy-mm-dd"
+          [showIcon]="true"
+          appendTo="body"
+          styleClass="w-full"
+          inputStyleClass="w-full">
+        </p-datepicker>
+
+      </div>
+
+      <!-- MÉTODO -->
+
+      <div class="flex flex-col">
+
+        <label class="block mb-2 font-semibold text-gray-700">
+          Método de Pago *
+        </label>
+
+        <input
+          pInputText
+          [(ngModel)]="payment.method"
+          placeholder="Ej: Efectivo, Transferencia, Nequi"
+          class="w-full" />
+
+      </div>
+
     </div>
 
-    <div>
-      <label class="block mb-2 font-semibold">
-        Monto
-      </label>
+    <!-- BOTONES -->
 
-      <p-inputnumber
-        [(ngModel)]="payment.amount"
-        mode="currency"
-        currency="COP"
-        locale="es-CO"
-        styleClass="w-full">
-      </p-inputnumber>
+    <div class="flex justify-center mt-8">
+
+      <div class="bg-gray-50 rounded-lg p-4 flex gap-4 items-center">
+
+        <button
+          pButton
+          type="button"
+          label="Actualizar"
+          icon="pi pi-save"
+          (click)="update()"
+          [loading]="loading"
+          [disabled]="loading">
+        </button>
+
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-secondary"
+          routerLink="/payment"
+          [disabled]="loading">
+        </button>
+
+      </div>
+
     </div>
-
-    <div>
-      <label class="block mb-2 font-semibold">
-        Fecha
-      </label>
-
-      <input
-        pInputText
-        [(ngModel)]="payment.date"
-        class="w-full">
-    </div>
-
-    <div>
-      <label class="block mb-2 font-semibold">
-        Método
-      </label>
-
-      <input
-        pInputText
-        [(ngModel)]="payment.method"
-        class="w-full">
-    </div>
-
-  </div>
-
-  <div class="flex gap-2 mt-6">
-
-    <p-button
-      label="Actualizar"
-      icon="pi pi-save"
-      (onClick)="update()"
-      [loading]="loading">
-    </p-button>
-
-    <p-button
-      label="Cancelar"
-      icon="pi pi-times"
-      severity="secondary"
-      [routerLink]="['/payment']">
-    </p-button>
 
   </div>
 

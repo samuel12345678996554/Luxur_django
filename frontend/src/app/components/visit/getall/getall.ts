@@ -11,7 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-
+import { TagModule } from 'primeng/tag';
 import { VisitService } from '../../../services/visit.service';
 import { VisitResponseI } from '../../../models/visit';
 
@@ -19,15 +19,16 @@ import { VisitResponseI } from '../../../models/visit';
   selector: 'app-visit-getall',
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule,
-    TableModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    ToastModule,
-    TooltipModule,
-    InputTextModule
-  ],
+  CommonModule,
+  RouterModule,
+  TableModule,
+  ButtonModule,
+  ConfirmDialogModule,
+  ToastModule,
+  TooltipModule,
+  InputTextModule,
+  TagModule
+],
   providers: [ConfirmationService, MessageService],
   templateUrl: './getall.html',
   styleUrls: ['./getall.css']
@@ -77,6 +78,53 @@ export class Getall implements OnInit, OnDestroy {
       })
     );
   }
+  getStatusLabel(status: string): string {
+
+  switch (status) {
+
+    case 'PENDING':
+      return 'Pendiente';
+
+    case 'COMPLETED':
+      return 'Realizada';
+
+    case 'INTERESTED':
+      return 'Interesado';
+
+    case 'NOT_INTERESTED':
+      return 'No interesado';
+
+    default:
+      return status;
+  }
+
+}
+
+getStatusSeverity(
+  status: string
+): 'success' | 'secondary' | 'info' | 'warn' | 'danger' {
+
+  switch (status) {
+
+    case 'PENDING':
+      return 'warn';
+
+    case 'COMPLETED':
+      return 'success';
+
+    case 'INTERESTED':
+      return 'info';
+
+    case 'NOT_INTERESTED':
+      return 'danger';
+
+    default:
+      return 'secondary';
+  }
+
+}
+
+
 
   confirmDelete(visit: VisitResponseI): void {
     this.confirmationService.confirm({

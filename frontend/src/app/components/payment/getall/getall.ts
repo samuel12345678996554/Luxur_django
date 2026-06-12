@@ -49,8 +49,8 @@ export class Getall implements OnInit, OnDestroy {
     this.loadPayments();
 
     this.subscription.add(
-      this.paymentService.payments$.subscribe(items => {
-        this.payments = items;
+      this.paymentService.payments$.subscribe(payments => {
+        this.payments = payments;
       })
     );
   }
@@ -64,9 +64,12 @@ export class Getall implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.paymentService.getAllPayments().subscribe({
-        next: () => this.loading = false,
+        next: () => {
+          this.loading = false;
+        },
         error: () => {
           this.loading = false;
+
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -105,5 +108,40 @@ export class Getall implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  getContractTypeLabel(type: string): string {
+    switch (type) {
+      case 'SALE':
+        return 'Venta';
+
+      case 'RENT':
+        return 'Alquiler';
+
+      default:
+        return type || 'N/A';
+    }
+  }
+
+  getMethodLabel(method: string): string {
+    switch (method) {
+      case 'CASH':
+        return 'Efectivo';
+
+      case 'TRANSFER':
+        return 'Transferencia';
+
+      case 'CARD':
+        return 'Tarjeta';
+
+      case 'NEQUI':
+        return 'Nequi';
+
+      case 'DAVIPLATA':
+        return 'Daviplata';
+
+      default:
+        return method || 'N/A';
+    }
   }
 }

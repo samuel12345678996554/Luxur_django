@@ -11,11 +11,17 @@ from .serializers import (
 
 
 class ContractViewSet(viewsets.ModelViewSet):
-    queryset = Contract.objects.select_related('client', 'property').all()
+
+    queryset = Contract.objects.select_related(
+        'client',
+        'property'
+    ).all()
+
     serializer_class = ContractSerializer
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
+
         serializer = self.get_serializer(data=request.data)
 
         if not serializer.is_valid():
@@ -25,22 +31,75 @@ class ContractViewSet(viewsets.ModelViewSet):
                 'message': 'Error en la validación de datos'
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        self.perform_create(serializer)
+        contract = serializer.save()
+
+        # Actualizar estado de la propiedad
+        property_obj = contract.property
+
+        if contract.contract_type == 'RENT':
+            property_obj.status = 'RENTED'
+
+        elif contract.contract_type == 'SALE':
+            property_obj.status = 'SOLD'
+
+        property_obj.save()
 
         return Response({
             'success': True,
-            'data': serializer.data,
+            'data': ContractSerializer(contract).data,
             'message': 'Contrato creado exitosamente'
         }, status=status.HTTP_201_CREATED)
 
+    def update(self, request, *args, **kwargs):
+
+        partial = kwargs.pop('partial', False)
+
+        instance = self.get_object()
+
+        serializer = self.get_serializer(
+            instance,
+            data=request.data,
+            partial=partial
+        )
+
+        serializer.is_valid(raise_exception=True)
+
+        contract = serializer.save()
+
+        # Actualizar estado de la propiedad
+        property_obj = contract.property
+
+        if contract.contract_type == 'RENT':
+            property_obj.status = 'RENTED'
+
+        elif contract.contract_type == 'SALE':
+            property_obj.status = 'SOLD'
+
+        property_obj.save()
+
+        return Response({
+            'success': True,
+            'data': ContractSerializer(contract).data,
+            'message': 'Contrato actualizado exitosamente'
+        })
+
 
 class PaymentViewSet(viewsets.ModelViewSet):
-    queryset = Payment.objects.select_related('contract', 'contract__client').all()
+
+    queryset = Payment.objects.select_related(
+        'contract',
+        'contract__client'
+    ).all()
+
     serializer_class = PaymentSerializer
     permission_classes = [AllowAny]
 
 
 class ContractDocumentViewSet(viewsets.ModelViewSet):
-    queryset = ContractDocument.objects.select_related('contract').all()
+
+    queryset = ContractDocument.objects.select_related(
+        'contract'
+    ).all()
+
     serializer_class = ContractDocumentSerializer
     permission_classes = [AllowAny]

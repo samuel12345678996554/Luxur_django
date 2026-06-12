@@ -1,8 +1,12 @@
 <div class="card p-6 bg-white rounded-xl shadow">
 
   <div class="flex justify-between items-center mb-4">
+
     <div>
-      <h2 class="text-2xl font-bold m-0">Gestión de Pagos</h2>
+      <h2 class="text-2xl font-bold m-0">
+        Gestión de Pagos
+      </h2>
+
       <p class="text-gray-500 m-0">
         Total registrados: {{ payments.length }}
       </p>
@@ -14,19 +18,26 @@
       [routerLink]="['/payment/create']"
       styleClass="p-button-success">
     </p-button>
+
   </div>
 
+  <!-- BUSCADOR -->
+
   <div class="mb-4">
+
     <span class="p-input-icon-left w-full">
+
       <i class="pi pi-search"></i>
 
       <input
         pInputText
         type="text"
         class="w-full"
-        placeholder="Buscar por contrato, cliente, método o fecha..."
+        placeholder="Buscar por cliente, cédula, propiedad o método..."
         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+
     </span>
+
   </div>
 
   <p-table
@@ -37,65 +48,148 @@
     [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-    [rowsPerPageOptions]="[5, 10, 25, 50]"
-    [globalFilterFields]="['contract_info', 'client_name', 'method', 'date']"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    [globalFilterFields]="[
+      'client_name',
+      'client_cedula',
+      'property_title',
+      'contract_type',
+      'method'
+    ]"
     dataKey="id"
     responsiveLayout="scroll"
-    styleClass="p-datatable-striped p-datatable-gridlines"
-    [tableStyle]="{'min-width': '50rem'}">
+    styleClass="p-datatable-striped p-datatable-gridlines">
+
+    <!-- CABECERA -->
 
     <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
-        </th>
 
-        <th pSortableColumn="contract_info">
-          Contrato <p-sortIcon field="contract_info"></p-sortIcon>
-        </th>
+      <tr>
 
         <th pSortableColumn="client_name">
-          Cliente <p-sortIcon field="client_name"></p-sortIcon>
+          Cliente
+          <p-sortIcon field="client_name"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="property_title">
+          Propiedad
+          <p-sortIcon field="property_title"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="contract_type">
+          Tipo Contrato
+          <p-sortIcon field="contract_type"></p-sortIcon>
         </th>
 
         <th pSortableColumn="amount">
-          Monto <p-sortIcon field="amount"></p-sortIcon>
+          Monto
+          <p-sortIcon field="amount"></p-sortIcon>
         </th>
 
         <th pSortableColumn="date">
-          Fecha <p-sortIcon field="date"></p-sortIcon>
+          Fecha
+          <p-sortIcon field="date"></p-sortIcon>
         </th>
 
         <th pSortableColumn="method">
-          Método <p-sortIcon field="method"></p-sortIcon>
+          Método
+          <p-sortIcon field="method"></p-sortIcon>
         </th>
 
         <th class="text-center">
           Acciones
         </th>
+
       </tr>
+
     </ng-template>
 
+    <!-- CUERPO -->
+
     <ng-template pTemplate="body" let-payment>
+
       <tr>
+
+        <!-- CLIENTE -->
+
         <td>
-          <span class="font-semibold">#{{ payment.id }}</span>
+
+          <div class="flex flex-col">
+
+            <span class="font-semibold">
+              {{ payment.client_name }}
+            </span>
+
+            <small class="text-gray-500">
+              CC: {{ payment.client_cedula }}
+            </small>
+
+          </div>
+
         </td>
 
-        <td>{{ payment.contract_info || payment.contract }}</td>
-        <td>{{ payment.client_name || 'Sin cliente' }}</td>
+        <!-- PROPIEDAD -->
 
         <td>
-          <span class="font-semibold text-green-700">
-            {{ payment.amount | currency:'COP':'symbol':'1.0-0' }}
+
+          <span class="font-medium">
+            {{ payment.property_title }}
           </span>
+
         </td>
 
-        <td>{{ payment.date | date:'dd/MM/yyyy' }}</td>
+        <!-- TIPO CONTRATO -->
 
-        <td>{{ payment.method }}</td>
+        <td>
+
+          <span
+            class="px-2 py-1 rounded text-white text-sm"
+            [ngClass]="{
+              'bg-green-500': payment.contract_type === 'SALE',
+              'bg-blue-500': payment.contract_type === 'RENT'
+            }">
+
+            {{ getContractTypeLabel(payment.contract_type) }}
+
+          </span>
+
+        </td>
+
+        <!-- MONTO -->
+
+        <td>
+
+          <span class="font-semibold text-green-700">
+
+            {{
+              payment.amount
+              | currency:'COP':'symbol':'1.0-0'
+            }}
+
+          </span>
+
+        </td>
+
+        <!-- FECHA -->
+
+        <td>
+
+          {{ payment.date | date:'dd/MM/yyyy' }}
+
+        </td>
+
+        <!-- MÉTODO -->
+
+        <td>
+
+          {{ getMethodLabel(payment.method) }}
+
+        </td>
+
+        <!-- ACCIONES -->
 
         <td class="text-center">
+
           <div class="flex justify-center gap-2">
 
             <p-button
@@ -115,16 +209,42 @@
             </p-button>
 
           </div>
+
         </td>
+
       </tr>
+
     </ng-template>
 
+    <!-- SIN DATOS -->
+
     <ng-template pTemplate="emptymessage">
+
       <tr>
+
         <td colspan="7" class="text-center p-6">
-          No se encontraron pagos
+
+          <div class="flex flex-col items-center gap-3">
+
+            <i class="pi pi-dollar text-4xl text-gray-400"></i>
+
+            <span class="text-gray-500">
+              No se encontraron pagos
+            </span>
+
+            <p-button
+              label="Crear Primer Pago"
+              icon="pi pi-plus"
+              [routerLink]="['/payment/create']"
+              styleClass="p-button-sm p-button-outlined">
+            </p-button>
+
+          </div>
+
         </td>
+
       </tr>
+
     </ng-template>
 
   </p-table>

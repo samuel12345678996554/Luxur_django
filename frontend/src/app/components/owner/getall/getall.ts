@@ -4,51 +4,51 @@ import { RouterModule } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 import { Subscription } from 'rxjs';
-import { OwnerService } from '../../../services/owner.service';
-import { OwnerResponseI } from '../../../models/owner';
+import { TagModule } from 'primeng/tag';
+import { ContractService } from '../../../services/contract';
+import { ContractResponseI } from '../../../models/contract';
 
 @Component({
   selector: 'app-owner-getall',
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule,
-    TableModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    ToastModule,
-    TooltipModule,
-    InputTextModule
-  ],
-  providers: [ConfirmationService, MessageService],
+  CommonModule,
+  RouterModule,
+  TableModule,
+  ButtonModule,
+  ToastModule,
+  TooltipModule,
+  InputTextModule,
+  TagModule
+],
+  providers: [MessageService],
   templateUrl: './getall.html',
   styleUrls: ['./getall.css']
 })
 export class Getall implements OnInit, OnDestroy {
-  owners: OwnerResponseI[] = [];
+
+  contracts: ContractResponseI[] = [];
   loading = false;
 
   private subscription = new Subscription();
 
   constructor(
-    private ownerService: OwnerService,
-    private confirmationService: ConfirmationService,
+    private contractService: ContractService,
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.loadOwners();
+    this.loadContracts();
 
     this.subscription.add(
-      this.ownerService.owners$.subscribe(owners => {
-        this.owners = owners;
+      this.contractService.contracts$.subscribe(contracts => {
+        this.contracts = contracts;
       })
     );
   }
@@ -57,50 +57,24 @@ export class Getall implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  loadOwners(): void {
+  loadContracts(): void {
     this.loading = true;
 
     this.subscription.add(
-      this.ownerService.getAllOwners().subscribe({
-        next: () => {
+      this.contractService.getAllContracts().subscribe({
+        next: (contracts) => {
+          this.contracts = contracts;
           this.loading = false;
         },
-        error: () => {
+        error: (error) => {
+          console.error(error);
+
           this.loading = false;
+
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'No se pudieron cargar los propietarios'
-          });
-        }
-      })
-    );
-  }
-
-  confirmDelete(owner: OwnerResponseI): void {
-    this.confirmationService.confirm({
-      message: `¿Eliminar a ${owner.name}?`,
-      header: 'Confirmar eliminación',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => this.deleteOwner(owner.id!)
-    });
-  }
-
-  deleteOwner(id: number): void {
-    this.subscription.add(
-      this.ownerService.deleteOwner(id).subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Eliminado',
-            detail: 'Propietario eliminado correctamente'
-          });
-        },
-        error: () => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'No se pudo eliminar el propietario'
+            detail: 'No se pudieron cargar las propiedades asignadas'
           });
         }
       })

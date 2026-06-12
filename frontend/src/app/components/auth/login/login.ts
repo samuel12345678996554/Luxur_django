@@ -56,7 +56,7 @@ throw new Error('Method not implemented.');
             detail: 'Inicio de sesión exitoso'
           });
           setTimeout(() => {
-            this.router.navigate(['/client']);
+            this.router.navigate(['/home']);
           }, 1000);
         },
         error: (error) => {

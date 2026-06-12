@@ -24,7 +24,7 @@
         pInputText
         type="text"
         class="w-full"
-        placeholder="Buscar por nombre, dirección, teléfono o email..."
+        placeholder="Buscar por cédula, nombre, dirección, teléfono o email..."
         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
     </span>
   </div>
@@ -38,7 +38,7 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [rowsPerPageOptions]="[5, 10, 25, 50]"
-    [globalFilterFields]="['name', 'address', 'phone', 'email']"
+    [globalFilterFields]="['cedula', 'name', 'address', 'phone', 'email']"
     dataKey="id"
     responsiveLayout="scroll"
     styleClass="p-datatable-striped p-datatable-gridlines"
@@ -46,8 +46,9 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
+
+        <th pSortableColumn="cedula">
+          Cédula <p-sortIcon field="cedula"></p-sortIcon>
         </th>
 
         <th pSortableColumn="name">
@@ -69,13 +70,17 @@
         <th class="text-center">
           Acciones
         </th>
+
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-client>
       <tr>
+
         <td>
-          <span class="font-semibold">#{{ client.id }}</span>
+          <span class="font-semibold text-blue-600">
+            {{ client.cedula }}
+          </span>
         </td>
 
         <td>
@@ -114,6 +119,7 @@
 
           </div>
         </td>
+
       </tr>
     </ng-template>
 

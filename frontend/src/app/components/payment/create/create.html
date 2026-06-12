@@ -6,20 +6,107 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-    <div>
-      <label class="block mb-2 font-semibold">Contrato</label>
+    <!-- CONTRATO -->
+
+    <div class="md:col-span-2">
+      <label class="block mb-2 font-semibold">
+        Contrato
+      </label>
+
       <p-select
         [(ngModel)]="payment.contract"
         [options]="contracts"
-        optionLabel="id"
         optionValue="id"
-        placeholder="Seleccione contrato"
-        styleClass="w-full">
+        optionLabel="client_name"
+        placeholder="Seleccione un contrato"
+        styleClass="w-full"
+        (onChange)="onContractChange($event.value)">
+
+        <ng-template let-contract pTemplate="item">
+
+          <div class="flex flex-col">
+
+            <span class="font-semibold">
+              {{ contract.client_name }}
+            </span>
+
+            <small class="text-gray-500">
+              {{ contract.property_title }}
+              -
+              {{
+                contract.contract_type === 'SALE'
+                  ? 'Venta'
+                  : 'Alquiler'
+              }}
+            </small>
+
+          </div>
+
+        </ng-template>
+
       </p-select>
     </div>
 
+    <!-- RESUMEN DEL CONTRATO -->
+
+    <div
+      *ngIf="selectedContract"
+      class="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
+
+      <h3 class="font-bold text-blue-700 mb-3">
+        Información del Contrato
+      </h3>
+
+      <div class="grid md:grid-cols-2 gap-4">
+
+        <div>
+          <strong>Cliente:</strong><br>
+          {{ selectedContract.client_name }}
+        </div>
+
+        <div>
+          <strong>Cédula:</strong><br>
+          {{ selectedContract.client_cedula }}
+        </div>
+
+        <div>
+          <strong>Propiedad:</strong><br>
+          {{ selectedContract.property_title }}
+        </div>
+
+        <div>
+          <strong>Tipo de Contrato:</strong><br>
+
+          <span
+            class="px-2 py-1 rounded text-white"
+            [ngClass]="{
+              'bg-green-500':
+                selectedContract.contract_type === 'SALE',
+              'bg-blue-500':
+                selectedContract.contract_type === 'RENT'
+            }">
+
+            {{
+              selectedContract.contract_type === 'SALE'
+                ? 'Venta'
+                : 'Alquiler'
+            }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MONTO -->
+
     <div>
-      <label class="block mb-2 font-semibold">Monto</label>
+      <label class="block mb-2 font-semibold">
+        Monto
+      </label>
+
       <p-inputnumber
         [(ngModel)]="payment.amount"
         mode="currency"
@@ -30,8 +117,13 @@
       </p-inputnumber>
     </div>
 
+    <!-- FECHA -->
+
     <div>
-      <label class="block mb-2 font-semibold">Fecha</label>
+      <label class="block mb-2 font-semibold">
+        Fecha del Pago
+      </label>
+
       <p-datepicker
         [(ngModel)]="payment.date"
         dateFormat="yy-mm-dd"
@@ -42,25 +134,30 @@
       </p-datepicker>
     </div>
 
-    <div>
-      <label class="block mb-2 font-semibold">Método</label>
-      <input
-        pInputText
+    <!-- MÉTODO DE PAGO -->
+
+    <div class="md:col-span-2">
+
+      <label class="block mb-2 font-semibold">
+        Método de Pago
+      </label>
+
+      <p-select
         [(ngModel)]="payment.method"
-        placeholder="Efectivo, transferencia, tarjeta..."
-        class="w-full">
+        [options]="paymentMethods"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Seleccione un método de pago"
+        styleClass="w-full">
+      </p-select>
+
     </div>
 
   </div>
 
-  <div class="flex gap-2 mt-6">
+  <!-- BOTONES -->
 
-    <p-button
-      label="Guardar"
-      icon="pi pi-save"
-      (onClick)="save()"
-      [loading]="loading">
-    </p-button>
+  <div class="flex justify-end gap-2 mt-6">
 
     <button
       pButton
@@ -70,6 +167,13 @@
       class="p-button-secondary"
       routerLink="/payment">
     </button>
+
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      (onClick)="save()"
+      [loading]="loading">
+    </p-button>
 
   </div>
 

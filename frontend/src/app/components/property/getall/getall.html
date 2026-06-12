@@ -46,9 +46,6 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
-        </th>
 
         <th pSortableColumn="title">
           Título <p-sortIcon field="title"></p-sortIcon>
@@ -69,14 +66,12 @@
         <th class="text-center">
           Acciones
         </th>
+
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-prop>
       <tr>
-        <td>
-          <span class="font-semibold">#{{ prop.id }}</span>
-        </td>
 
         <td>
           <div class="flex flex-col">
@@ -120,13 +115,15 @@
 
           </div>
         </td>
+
       </tr>
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="6" class="text-center p-6">
+        <td colspan="5" class="text-center p-6">
           <div class="flex flex-col items-center gap-3">
+
             <i class="pi pi-home text-4xl text-gray-400"></i>
 
             <span class="text-gray-500">
@@ -139,6 +136,7 @@
               [routerLink]="['/property/create']"
               styleClass="p-button-sm p-button-outlined">
             </p-button>
+
           </div>
         </td>
       </tr>

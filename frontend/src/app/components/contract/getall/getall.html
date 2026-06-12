@@ -1,3 +1,4 @@
+```html
 <div class="card p-6 bg-white rounded-xl shadow">
 
   <div class="flex justify-between items-center mb-4">
@@ -24,7 +25,7 @@
         pInputText
         type="text"
         class="w-full"
-        placeholder="Buscar por cliente, fecha, monto o estado..."
+        placeholder="Buscar por cédula, nombre, tipo de contrato, fecha o monto..."
         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
     </span>
   </div>
@@ -38,52 +39,79 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [rowsPerPageOptions]="[5, 10, 25, 50]"
-    [globalFilterFields]="['client', 'start_date', 'end_date', 'total_amount', 'status']"
+    [globalFilterFields]="[
+      'client_cedula',
+      'client_name',
+      'contract_type',
+      'start_date',
+      'end_date',
+      'total_amount'
+    ]"
     dataKey="id"
     responsiveLayout="scroll"
     styleClass="p-datatable-striped p-datatable-gridlines"
-    [tableStyle]="{'min-width': '50rem'}">
+    [tableStyle]="{'min-width': '60rem'}">
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
+
+        <th pSortableColumn="client_cedula">
+          Cliente
+          <p-sortIcon field="client_cedula"></p-sortIcon>
         </th>
 
-        <th pSortableColumn="client">
-          Cliente <p-sortIcon field="client"></p-sortIcon>
+        <th pSortableColumn="contract_type">
+          Tipo Contrato
+          <p-sortIcon field="contract_type"></p-sortIcon>
         </th>
 
         <th pSortableColumn="start_date">
-          Fecha Inicio <p-sortIcon field="start_date"></p-sortIcon>
+          Fecha Inicio
+          <p-sortIcon field="start_date"></p-sortIcon>
         </th>
 
         <th pSortableColumn="end_date">
-          Fecha Fin <p-sortIcon field="end_date"></p-sortIcon>
+          Fecha Fin
+          <p-sortIcon field="end_date"></p-sortIcon>
         </th>
 
         <th pSortableColumn="total_amount">
-          Monto Total <p-sortIcon field="total_amount"></p-sortIcon>
+          Monto Total
+          <p-sortIcon field="total_amount"></p-sortIcon>
         </th>
 
         <th pSortableColumn="status">
-          Estado <p-sortIcon field="status"></p-sortIcon>
+          Estado
+          <p-sortIcon field="status"></p-sortIcon>
         </th>
 
         <th class="text-center">
           Acciones
         </th>
+
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-contract>
       <tr>
+
         <td>
-          <span class="font-semibold">#{{ contract.id }}</span>
+          <div class="flex flex-col">
+            <span class="font-semibold text-gray-800">
+              {{ contract.client_cedula }}
+            </span>
+
+            <small class="text-gray-500">
+              {{ contract.client_name }}
+            </small>
+          </div>
         </td>
 
         <td>
-          {{ contract.client }}
+          <p-tag
+            [value]="contract.contract_type === 'SALE' ? 'Venta' : 'Alquiler'"
+            [severity]="contract.contract_type === 'SALE' ? 'success' : 'info'">
+          </p-tag>
         </td>
 
         <td>
@@ -128,6 +156,7 @@
 
           </div>
         </td>
+
       </tr>
     </ng-template>
 
@@ -135,6 +164,7 @@
       <tr>
         <td colspan="7" class="text-center p-6">
           <div class="flex flex-col items-center gap-3">
+
             <i class="pi pi-file text-4xl text-gray-400"></i>
 
             <span class="text-gray-500">
@@ -147,6 +177,7 @@
               [routerLink]="['/contract/create']"
               styleClass="p-button-sm p-button-outlined">
             </p-button>
+
           </div>
         </td>
       </tr>
@@ -158,3 +189,4 @@
 
 <p-confirmDialog></p-confirmDialog>
 <p-toast></p-toast>
+```
